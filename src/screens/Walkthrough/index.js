@@ -1,15 +1,14 @@
 
 import React, { Component } from 'react';
-import { Text, View, Image, StatusBar, Platform, ImageBackground,Dimensions,TouchableOpacity, ListView,BackHandler, I18nManager} from 'react-native';
+import { AsyncStorage, View, Image, StatusBar, Platform, ImageBackground,Dimensions,TouchableOpacity, ListView,BackHandler, I18nManager} from 'react-native';
 import { Container,Header,Left,Right,Body } from 'native-base';
 import RNSwiper from './RNSwiper';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
 import styles from './styles';
-import {Images, Fonts, Metrics, Colors } from '../../../themes/';
-
+import {Images, Metrics} from '../../../themes/';
 
 var NavigateKeys=require('../../data/NavigateKeys.json');
+var StorageKeys=require('../../data/StorageKeys.json');
 
 export default class WalkthroughTravel extends Component {
 
@@ -35,6 +34,7 @@ export default class WalkthroughTravel extends Component {
     };
 
     this.onPress=this.onPress.bind(this);
+    this.goLogin=this.goLogin.bind(this);
  	}
 
   componentWillMount() {
@@ -74,10 +74,15 @@ export default class WalkthroughTravel extends Component {
 
     onPress(index){
       if(index==3){
-        this.props.navigation.navigate(NavigateKeys.LoginKey)
+        this.goLogin()
       }
     }
 
+  goLogin(){
+    AsyncStorage.setItem(StorageKeys.IsWalkThroughShow,"true");
+
+    this.props.navigation.navigate(NavigateKeys.LoginKey)
+  }
 
   render(){
 		StatusBar.setBarStyle('light-content', true);
@@ -137,7 +142,7 @@ export default class WalkthroughTravel extends Component {
            <Body style={styles.body}>
            </Body>
            <Right style={styles.right}/>
-             <TouchableOpacity style={styles.backArrow} onPress={()=>this.props.navigation.navigate(NavigateKeys.LoginKey)}>
+             <TouchableOpacity style={styles.backArrow} onPress={()=>this.goLogin()}>
                <FontAwesome name="angle-right" size={30} color="white"/>
              </TouchableOpacity>
           </Header>

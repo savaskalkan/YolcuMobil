@@ -1,5 +1,6 @@
 {
     "LoginKey":"Login",
+    "WalkthroughKey":"Walkthrough",
     "MenuKey":"Menu",
     "ExitKey":"Exit"
 }
