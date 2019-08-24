@@ -1,4 +1,5 @@
 {
     "IsLoginKey":"IsLogin",
-    "IsWalkThroughShow":"IsWalkThroughShow"
+    "IsWalkThroughShow":"IsWalkThroughShow",
+    "PassengerDetailKey":"PassengerDetail"
 }

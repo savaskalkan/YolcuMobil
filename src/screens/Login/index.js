@@ -154,6 +154,7 @@ export default class LoginScreen extends Component {
         }, 1500);        
             
         if (responseJson.IsSuccess ) {
+            AsyncStorage.setItem(StorageKeys.PassengerDetailKey,JSON.stringify(responseJson.Data.PassengerDetail));
             AsyncStorage.setItem(StorageKeys.IsLoginKey,"true");            
             this.props.navigation.navigate(NavigateKeys.MenuKey);
         }
