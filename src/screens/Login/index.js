@@ -52,7 +52,7 @@ export default class LoginScreen extends Component {
           let key = store[i][0];
           let value = store[i][1];
 
-          if(key==StorageKeys.IsLoginKey && value!="true"){
+          if(key==StorageKeys.IsLoginKey && value=="true"){
             this.props.navigation.navigate(NavigateKeys.MenuKey);
           }            
           else if(key==StorageKeys.IsWalkThroughShow && value==null){
