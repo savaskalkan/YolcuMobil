@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     borderRadius: 40,
     width: Metrics.WIDTH * 0.8,
-    marginTop: 35
+    marginTop: Metrics.HEIGHT * 0.12
   },
   buttongetstarted: {
     alignSelf: "center",

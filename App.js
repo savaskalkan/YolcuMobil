@@ -1,5 +1,5 @@
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import {LoginScreen,MenuScreen,ExitScreen,Walkthrough,SignupScreen} from './src/screens'
+import {LoginScreen,MenuScreen,ExitScreen,Walkthrough,OtpSmsScreen} from './src/screens'
 
 const AppStack = createStackNavigator(
   {
@@ -19,8 +19,8 @@ const RootStack = createStackNavigator(
     Main: {
       screen: AppStack,
     },
-    Signup: {
-      screen: SignupScreen,
+    OtpSms: {
+      screen: OtpSmsScreen,
     },
   },
   {

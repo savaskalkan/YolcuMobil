@@ -25,7 +25,7 @@ export default class LoginService {
         otpSmsModel.GsmNumber = gsmNumber;
         otpSmsModel.Message = message;
 
-        return fetch(this.host.ServiceUrl + 'Login/SendOtpSms', {
+        return fetch(this.host.ServiceUrl + 'Login/SendOtpSmsForPassenger', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export default class LoginService {
     }
 
     createPasswordMobile(createPasswordMobileModel) {
-        return fetch(this.host.ServiceUrl + 'Login/CreatePasswordMobile', {
+        return fetch(this.host.ServiceUrl + 'Login/CreatePasswordMobileForPassenger', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

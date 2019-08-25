@@ -2,5 +2,6 @@
     "LoginKey":"Login",
     "WalkthroughKey":"Walkthrough",
     "MenuKey":"Menu",
+    "OtpSmsKey":"OtpSms",
     "ExitKey":"Exit"
 }

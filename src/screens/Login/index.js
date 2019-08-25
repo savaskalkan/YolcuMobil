@@ -52,7 +52,7 @@ export default class LoginScreen extends Component {
           let key = store[i][0];
           let value = store[i][1];
 
-          if(key==StorageKeys.IsLoginKey && value=="true"){
+          if(key==StorageKeys.IsLoginKey && value!="true"){
             this.props.navigation.navigate(NavigateKeys.MenuKey);
           }            
           else if(key==StorageKeys.IsWalkThroughShow && value==null){
@@ -96,7 +96,7 @@ export default class LoginScreen extends Component {
                 placeholder="Gsm Numarası"
                 style={styles.inputmain}
                 value={this.state.gsmNumber} 
-                keyboardType="numeric"
+                keyboardType="numbers-and-punctuation"
                 onChangeText={(value) => this.setState({ gsmNumber: value })}
               />
             </Item>
@@ -120,7 +120,7 @@ export default class LoginScreen extends Component {
                 Giriş Yap
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => alert("Forgot Password")}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate(NavigateKeys.OtpSmsKey)}>
               <Text autoCapitalize="words" style={styles.buttongettext}>
                 Şifremi Unuttum
               </Text>

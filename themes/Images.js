@@ -7,6 +7,7 @@ const images = {
   ceturLogo: require("../assets/ceturLogo.png"),
   ceturLogoSmall: require("../assets/ceturLogoSmall.png"),
   bms: require("../assets/bms.png"),
+  yerHazir: require("../assets/yerhazir.png"),
 };
 
 export default images;
