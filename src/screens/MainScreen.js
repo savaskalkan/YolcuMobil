@@ -5,7 +5,7 @@ import {Ionicons} from '@expo/vector-icons'
 export default class MainScreen extends Component { 
   render() {
     return (
-      <View style={{paddingTop:350}}>
+      <View>
           <Text>Main</Text>
     </View>
     );
