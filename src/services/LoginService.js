@@ -49,7 +49,7 @@ export default class LoginService {
     }
 
     updatePasswordMobile(updatePasswordMobileModel) {
-        return fetch(this.host.ServiceUrl + 'Login/UpdatePasswordMobile', {
+        return fetch(this.host.ServiceUrl + 'Login/UpdatePasswordMobileForPassenger', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
