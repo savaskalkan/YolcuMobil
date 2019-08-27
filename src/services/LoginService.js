@@ -59,6 +59,18 @@ export default class LoginService {
             return result.json();
         });
     }
+
+    updateNotificationToken(updatePasswordMobileModel) {
+        return fetch(this.host.ServiceUrl + 'Login/UpdateNotificationToken', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatePasswordMobileModel),
+        }).then(function (result) {
+            return result.json();
+        });
+    }
 }
 
 

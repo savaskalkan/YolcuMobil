@@ -96,7 +96,7 @@ export default class LoginScreen extends Component {
                 placeholder="Gsm Numarası"
                 style={styles.inputmain}
                 value={this.state.gsmNumber} 
-                keyboardType="numbers-and-punctuation"
+                keyboardType="numeric"
                 onChangeText={(value) => this.setState({ gsmNumber: value })}
               />
             </Item>

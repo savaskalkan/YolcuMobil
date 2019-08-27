@@ -86,7 +86,7 @@ export default class OtpSmsScreen extends Component {
                         style={styles.inputemail}
                         placeholder='Gsm Numarası'
                         value={this.state.gsmNumber} 
-                        keyboardType="numbers-and-punctuation"
+                        keyboardType="numeric"
                         onChangeText={(value) => this.setState({ gsmNumber: value })} />
                 </Item>
               )}
@@ -98,7 +98,7 @@ export default class OtpSmsScreen extends Component {
                         textAlign={I18nManager.isRTL ? "right" : "left"}
                         style={styles.inputemail}
                         value={this.state.smsText} 
-                        keyboardType="numbers-and-punctuation"
+                        keyboardType="numeric"
                         onChangeText={(value) => this.setState({ smsText: value })}
                         placeholder='Sms Şifre' />
                 </Item>
