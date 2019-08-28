@@ -1,17 +1,18 @@
 import React from 'react';
 import {
-  Text,
   AsyncStorage,
-  View,
-  Alert
+  Alert,
+  StyleSheet
 } from 'react-native';
 import {Notifications } from 'expo';
 import * as Permissions from 'expo-permissions'
 import {LoginService} from '../services'
 import {UpdateNotificationTokenModel} from '../models';
+import { Container, Content, Button, Text } from 'native-base';
 
 var StorageKeys=require('../data/StorageKeys.json');
-var NavigateKeys=require('../data/NavigateKeys.json');
+var navigateKeys=require('./../data/NavigateKeys.json');
+var menuTitle=require('./../data/MenuTitles.json');
 
 export default class MainScreen extends React.Component {
   loginService = new LoginService();
@@ -34,9 +35,34 @@ export default class MainScreen extends React.Component {
 
   render() {
     return (
-      <View>
-        <Text>Main</Text>
-      </View>
+      <Container style={{paddingTop:50}}>
+        <Content >
+            <Button rounded block info style={styles.Button}
+              onPress={()=>this.props.navigation.navigate(navigateKeys.CarDriverKey)}>
+              <Text>{menuTitle.CarDriverScreenTitle}</Text>
+            </Button>
+            <Button rounded block info style={styles.Button}
+              onPress={()=>this.props.navigation.navigate(navigateKeys.BusStopRouteKey)}>
+              <Text>{menuTitle.BusStopRouteScreenTitle}</Text>
+            </Button>
+            <Button rounded block info style={styles.Button}
+              onPress={()=>this.props.navigation.navigate(navigateKeys.WhereIsServiceKey)}>
+              <Text>{menuTitle.WhereIsServiceScreenTitle}</Text>
+            </Button>
+            <Button rounded block info style={styles.Button}
+              onPress={()=>this.props.navigation.navigate(navigateKeys.ChangePasswordKey)}>
+              <Text>{menuTitle.ChangePasswordScreenTitle}</Text>
+            </Button>
+            {/* <Button rounded block info style={styles.Button}
+              onPress={()=>this.props.navigation.navigate(navigateKeys.WriteCeturKey)}>
+              <Text>{menuTitle.WriteCeturScreenTitle}</Text>
+            </Button>
+            <Button rounded block info style={styles.Button}
+              onPress={()=>this.props.navigation.navigate(navigateKeys.SettingKey)}>
+              <Text>{menuTitle.SettingScreenTitle}</Text>
+            </Button> */}
+        </Content>
+    </Container>
     );
   }
 
@@ -70,3 +96,12 @@ export default class MainScreen extends React.Component {
     });
   }
 }
+
+const styles = StyleSheet.create({
+  Button: {
+    marginTop:20,
+    marginLeft:20,
+    marginRight:20,
+    height:70
+  },
+});

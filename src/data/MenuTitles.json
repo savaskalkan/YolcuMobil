@@ -1,10 +1,8 @@
 {
     "MainScreenTitle":"Ana Sayfa",
-    "CarScreenTitle":"Aracım",
-    "DriverScreenTitle":"Sürücüm",
-    "RouteScreenTitle":"Rotalarım",
-    "WriteCeturScreenTitle":"Cetur'a Yaz",
-    "SettingScreenTitle":"Ayarlar",
+    "CarDriverScreenTitle":"Aracım&Sürücüm",
+    "BusStopRouteScreenTitle":"Durağım&Rotam",
+    "WhereIsServiceScreenTitle":"Servisim Nerede?",
     "ChangePasswordScreenTitle":"Şifre Değiştirme",
     "ExitScreenTitle":"Çıkış"
 }

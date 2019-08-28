@@ -3,5 +3,9 @@
     "WalkthroughKey":"Walkthrough",
     "MenuKey":"Menu",
     "OtpSmsKey":"OtpSms",
+    "BusStopRouteKey":"BusStopRoute",
+    "CarDriverKey":"CarDriver",
+    "WhereIsServiceKey":"WhereIsService",
+    "ChangePasswordKey":"ChangePassword",
     "ExitKey":"Exit"
 }

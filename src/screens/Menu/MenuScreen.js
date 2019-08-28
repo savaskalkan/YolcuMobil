@@ -5,7 +5,10 @@ import {
 import {
   MainScreenStackNavigator,
   ExitScreenStackNavigator,
-  ChangePasswordScreenStackNavigator
+  ChangePasswordScreenStackNavigator,
+  BusStopRouteScreenStackNavigator,
+  CarDriverScreenStackNavigator,
+  WhereIsServiceScreenStackNavigator
 } from './Navigators'
 
 var menuTitle=require('./../../data/MenuTitles.json');
@@ -19,12 +22,30 @@ const MenuScreen = createDrawerNavigator(
       },
     },
     Screen2: {
+      screen: CarDriverScreenStackNavigator,
+      navigationOptions: {
+        drawerLabel: menuTitle.CarDriverScreenTitle,
+      },
+    },
+    Screen3: {
+      screen: BusStopRouteScreenStackNavigator,
+      navigationOptions: {
+        drawerLabel: menuTitle.BusStopRouteScreenTitle,
+      },
+    },
+    Screen4: {
+      screen: WhereIsServiceScreenStackNavigator,
+      navigationOptions: {
+        drawerLabel: menuTitle.WhereIsServiceScreenTitle,
+      },
+    },
+    Screen5: {
       screen: ChangePasswordScreenStackNavigator,
       navigationOptions: {
         drawerLabel: menuTitle.ChangePasswordScreenTitle,
       },
     },
-    Screen3: {
+    Screen6: {
       screen: ExitScreenStackNavigator,
       navigationOptions: {
         drawerLabel: menuTitle.ExitScreenTitle,
