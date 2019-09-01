@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
   },
 
   NextText: {
-    fontFamily: Fonts.type.robotoMedium,
     fontSize: Fonts.moderateScale(16),
     color: "#fff",
     textAlign: "center",

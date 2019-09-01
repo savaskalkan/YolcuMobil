@@ -1,5 +1,8 @@
 {
     "IsLoginKey":"IsLogin",
     "IsWalkThroughShow":"IsWalkThroughShow",
-    "PassengerDetailKey":"PassengerDetail"
+    "PassengerDetailKey":"PassengerDetail",
+    "SelectedProjectId":"SelectedProjectId",
+    "SelectedRouteId":"SelectedRouteId",
+    "SelectedVoyageId":"SelectedVoyageId"
 }

@@ -27,9 +27,7 @@ export default class WalkthroughTravel extends Component {
     const rowHasChanged = (r1, r2) => r1 !== r2
 
     // DataSource configured
-    const ds = new ListView.DataSource({rowHasChanged})
     this.state = {
-       dataSource: ds.cloneWithRows(dataObjects),
        activeindicator: 0,
     };
 

@@ -46,21 +46,16 @@ export default class LoginScreen extends Component {
   }
 
   componentWillMount() {
-    AsyncStorage.getAllKeys((err, keys) => {
-      AsyncStorage.multiGet(keys, (err, stores) => {
-        stores.map((result, i, store) => {
-          let key = store[i][0];
-          let value = store[i][1];
-
-          if(key==StorageKeys.IsLoginKey && value=="true"){
-            this.props.navigation.navigate(NavigateKeys.MenuKey);
-          }            
-          else if(key==StorageKeys.IsWalkThroughShow && value==null){
-            this.props.navigation.navigate(NavigateKeys.WalkthroughKey)
-          }
-        });
-        
-      });
+    AsyncStorage.getItem(StorageKeys.IsLoginKey, (error,value) => {      
+      if(value=="true"){
+        this.props.navigation.navigate(NavigateKeys.MenuKey);
+      }  
+    }); 
+                  
+    AsyncStorage.getItem(StorageKeys.IsWalkThroughShow, (error,value) => {
+      if(value==null){
+        this.props.navigation.navigate(NavigateKeys.WalkthroughKey);
+      } 
     });
   }
 

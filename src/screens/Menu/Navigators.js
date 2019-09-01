@@ -6,7 +6,8 @@ import ExitScreen from '../ExitScreen'
 import ChangePasswordScreen from '../ChangePassword'
 import BusStopRouteScreen from '../BusStopRoute'
 import CarDriverScreen from '../CarDriver'
-import WhereIsServiceScreen from '../WhereIsService'
+import WhereIsServiceNavigator from '../navigators/WhereIsServiceNavigator'
+import {  Button } from 'react-native';
 
 var backgroundColor="#373737";
 var headerTintColor="#fff";
@@ -56,14 +57,17 @@ export const MainScreenStackNavigator = createStackNavigator({
 
   export const WhereIsServiceScreenStackNavigator = createStackNavigator({
     WhereIsService: {
-        screen: WhereIsServiceScreen,
+        screen: WhereIsServiceNavigator,
         navigationOptions: ({ navigation }) => ({
-          title:menuTitle.WhereIsServiceScreenTitle,
+          title:  menuTitle.WhereIsServiceScreenTitle, 
           headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
           headerStyle: {
             backgroundColor: backgroundColor,
           },
           headerTintColor: '#fff',
+          headerRight: (
+            <Button style={{backgroundColor:backgroundColor}} onPress={() => navigation.navigate('WhereIsServiceModal')} title="FILTRELE"/>
+          ),
         }),
       },
   });
