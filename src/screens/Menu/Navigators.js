@@ -8,8 +8,9 @@ import BusStopRouteScreen from '../BusStopRoute'
 import CarDriverScreen from '../CarDriver'
 import WhereIsServiceNavigator from '../navigators/WhereIsServiceNavigator'
 import {  Button } from 'react-native';
+import { Colors } from "../../../themes";
+import { StyleSheet,TouchableOpacity,Text } from 'react-native';
 
-var backgroundColor="#373737";
 var headerTintColor="#fff";
 var menuTitle=require('./../../data/MenuTitles.json');
 
@@ -20,7 +21,7 @@ export const MainScreenStackNavigator = createStackNavigator({
         title: "",
         headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
         headerStyle: {
-          backgroundColor: backgroundColor,
+          backgroundColor: Colors.softBlack,
         },
         headerTintColor: headerTintColor,
       }),
@@ -34,7 +35,7 @@ export const MainScreenStackNavigator = createStackNavigator({
           title:menuTitle.BusStopRouteScreenTitle,
           headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
           headerStyle: {
-            backgroundColor: backgroundColor,
+            backgroundColor: Colors.softBlack,
           },
           headerTintColor: '#fff',
         }),
@@ -48,7 +49,7 @@ export const MainScreenStackNavigator = createStackNavigator({
           title:menuTitle.CarDriverScreenTitle,
           headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
           headerStyle: {
-            backgroundColor: backgroundColor,
+            backgroundColor: Colors.softBlack,
           },
           headerTintColor: '#fff',
         }),
@@ -62,11 +63,21 @@ export const MainScreenStackNavigator = createStackNavigator({
           title:  menuTitle.WhereIsServiceScreenTitle, 
           headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
           headerStyle: {
-            backgroundColor: backgroundColor,
+            backgroundColor: Colors.softBlack,
           },
           headerTintColor: '#fff',
           headerRight: (
-            <Button style={{backgroundColor:backgroundColor}} onPress={() => navigation.navigate('WhereIsServiceModal')} title="FILTRELE"/>
+            <TouchableOpacity
+                      style={{backgroundColor:Colors.softBlack}}
+                      onPress={() => navigation.navigate('WhereIsServiceModal')}
+                      underlayColor='#fff'>
+                      <Text style={{
+                        color:'#fff',
+                        textAlign:'center',
+                        paddingLeft : 10,
+                        paddingRight : 10
+                    }}>FILTRELE</Text>
+            </TouchableOpacity>
           ),
         }),
       },
@@ -79,7 +90,7 @@ export const ChangePasswordScreenStackNavigator = createStackNavigator({
         title:menuTitle.ChangePasswordScreenTitle,
         headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
         headerStyle: {
-          backgroundColor: backgroundColor,
+          backgroundColor: Colors.softBlack,
         },
         headerTintColor: '#fff',
       }),
@@ -93,7 +104,7 @@ export const ExitScreenStackNavigator = createStackNavigator({
       title: "",
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
-        backgroundColor: backgroundColor,
+        backgroundColor: Colors.softBlack,
       },
       headerTintColor: '#fff',
     }),

@@ -4,6 +4,9 @@ export { default as CreatePasswordMobileModel } from './CreatePasswordMobileMode
 export { default as UpdatePasswordMobileModel } from './UpdatePasswordMobileModel';
 export { default as UpdateNotificationTokenModel } from './UpdateNotificationTokenModel';
 export { default as GetDirectionsModel } from './GetDirectionsModel';
+export { default as GetProjectsModel } from './GetProjectsModel';
+export { default as GetRoutesModel } from './GetRoutesModel';
+export { default as GetVoyagesModel } from './GetVoyagesModel';
 
 
 

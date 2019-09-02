@@ -1,15 +1,15 @@
 import { Platform, StyleSheet } from "react-native";
-import { Metrics, Fonts } from "../../../themes";
+import { Metrics, Fonts,Colors } from "../../../themes";
 
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: "#39C1CD"
+    backgroundColor: Colors.cetur
   },
 
   MainBG: {
     width: Metrics.WIDTH,
-    backgroundColor: "#39C1CD",
+    backgroundColor: Colors.cetur,
     height: Metrics.HEIGHT * 0.9
   },
 

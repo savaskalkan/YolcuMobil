@@ -5,7 +5,8 @@ import {GetProjectsModel,GetRoutesModel,GetVoyagesModel} from '../../models';
 import MapService from '../../services/MapService';
 import {AsyncStorage,Alert} from 'react-native';
 import * as Constant from '../../data/Constants';
-import {  Button } from 'react-native';
+import { StyleSheet,TouchableOpacity,Text } from 'react-native';
+import { Colors } from "../../../themes";
 
 var StorageKeys=require('../../data/StorageKeys.json');
 
@@ -55,8 +56,12 @@ export default class WhereIsServiceModalScreen extends Component {
           let key = store[i][0];
           let value = store[i][1];
 
-          if(key==StorageKeys.passengerId)
-            passengerId=value;
+          if(key==StorageKeys.PassengerDetailKey){
+            var parsedUserDetail= JSON.parse(value);
+             passengerId=parsedUserDetail["PassengerId"];
+     
+             this.getProjects(passengerId);
+          }
           else if(key==StorageKeys.SelectedVoyageId)
             voyageId=value;
         });
@@ -81,17 +86,24 @@ export default class WhereIsServiceModalScreen extends Component {
           <Grid style={{ paddingLeft: 5, paddingRight: 5, paddingTop: 5, marginTop: 20  }}>
               <Row style={{ alignContent: "center", alignItems: "center" }}>
                   <Col size={50} >
-                   <Button block rounded light onPress={this.filterOperation} title="Filtrele">
-                      </Button>
+                    <TouchableOpacity
+                              style={styles.filterButton}
+                              onPress={this.filterOperation}
+                              underlayColor='#fff'>
+                              <Text style={styles.buttonText}>Filtrele</Text>
+                    </TouchableOpacity>
                  </Col>
               </Row>
           </Grid>
           <Grid style={{ marginTop: 20 }}>
               <Row style={{ alignContent: "center", alignItems: "center" }}>
-                  <Col size={50} >
-                     <Button block transparent 
-                         onPress={this.exitOperation} title="İptal">
-                    </Button>
+                  <Col size={50} >                 
+                    <TouchableOpacity
+                              style={styles.exitButton}
+                              onPress={this.exitOperation}
+                              underlayColor='#fff'>
+                              <Text style={styles.buttonText}>İptal</Text>
+                    </TouchableOpacity>
                   </Col>
               </Row>
           </Grid>
@@ -226,3 +238,34 @@ export default class WhereIsServiceModalScreen extends Component {
     });
   }
 }
+
+const styles = StyleSheet.create({
+  filterButton:{
+    marginRight:40,
+    marginLeft:40,
+    marginTop:10,
+    paddingTop:10,
+    paddingBottom:10,
+    backgroundColor:Colors.cetur,
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#fff'
+  },
+  exitButton:{
+    marginRight:40,
+    marginLeft:40,
+    marginTop:10,
+    paddingTop:10,
+    paddingBottom:10,
+    backgroundColor:Colors.frost,
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#fff'
+  },
+  buttonText:{
+      color:'#fff',
+      textAlign:'center',
+      paddingLeft : 10,
+      paddingRight : 10
+  }
+});
