@@ -6,19 +6,13 @@ import { SliderBox } from 'react-native-image-slider-box';
 import { Metrics } from '../../../../../themes/';
 
 export default class CarProfileScreen extends Component {
-  constructor(props) {
- 		super(props);
-     this.state = {
-      images: [
-        'https://source.unsplash.com/1024x768/?nature',
-        'https://source.unsplash.com/1024x768/?water',
-        'https://source.unsplash.com/1024x768/?girl',
-        'https://source.unsplash.com/1024x768/?tree'
-      ]
-    };
- 	}
 
   render(){
+    const carImages=[];
+    this.props.carImages.map((image, index) => (
+        carImages.push(image.fullPath)
+    ));
+
 		StatusBar.setBarStyle('light-content', true);
 		if(Platform.OS === 'android') {
 			StatusBar.setBackgroundColor('transparent',true);
@@ -27,11 +21,11 @@ export default class CarProfileScreen extends Component {
 
     return(
       <Container style={styles.main}>
-        <SliderBox images={this.state.images} sliderBoxHeight={Metrics.HEIGHT * 0.60}/>
+        <SliderBox images={carImages} sliderBoxHeight={Metrics.HEIGHT * 0.60}/>
 
         <Content>
         <View style={styles.detailsView}>
-          <Text style={styles.nameTxt}>34 PT 1192</Text>      
+          <Text style={styles.nameTxt}>{this.props.carDetail.plaka}</Text>      
         </View>
         </Content>
 

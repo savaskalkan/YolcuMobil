@@ -24,8 +24,8 @@ export default class DriverProfileScreen extends Component {
 
         <Content>
         <View style={styles.detailsView}>
-          <Text style={styles.nameTxt}>Reşit PAYÇIN</Text>
-          <Text style={styles.addressTxt}>5079611458</Text>          
+          <Text style={styles.nameTxt}>{this.props.driverInformation.Name} {this.props.driverInformation.Surname}</Text>
+          <Text style={styles.addressTxt}>{this.props.driverInformation.PhoneNumber1}</Text>          
         </View>
         </Content>
 
