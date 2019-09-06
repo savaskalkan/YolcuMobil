@@ -7,6 +7,7 @@ import ChangePasswordScreen from '../ChangePassword'
 import BusStopRouteScreen from '../BusStopRoute'
 import CarDriverScreen from '../CarDriver'
 import WhereIsServiceNavigator from '../navigators/WhereIsServiceNavigator'
+import BusStopRouteNavigator from '../navigators/BusStopRouteNavigator'
 import {  Button } from 'react-native';
 import { Colors } from "../../../themes";
 import { StyleSheet,TouchableOpacity,Text } from 'react-native';
@@ -30,7 +31,7 @@ export const MainScreenStackNavigator = createStackNavigator({
 
   export const BusStopRouteScreenStackNavigator = createStackNavigator({
     BusStopRoute: {
-        screen: BusStopRouteScreen,
+        screen: BusStopRouteNavigator,
         navigationOptions: ({ navigation }) => ({
           title:menuTitle.BusStopRouteScreenTitle,
           headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
@@ -38,6 +39,19 @@ export const MainScreenStackNavigator = createStackNavigator({
             backgroundColor: Colors.softBlack,
           },
           headerTintColor: '#fff',
+          headerRight: (
+            <TouchableOpacity
+                      style={{backgroundColor:Colors.softBlack}}
+                      onPress={() => navigation.navigate('BusStopRouteModal')}
+                      underlayColor='#fff'>
+                      <Text style={{
+                        color:'#fff',
+                        textAlign:'center',
+                        paddingLeft : 10,
+                        paddingRight : 10
+                    }}>FILTRELE</Text>
+            </TouchableOpacity>
+          ),
         }),
       },
   });
