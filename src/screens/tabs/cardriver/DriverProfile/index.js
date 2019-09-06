@@ -15,8 +15,12 @@ export default class DriverProfileScreen extends Component {
 		if(Platform.OS === 'android') {
 			StatusBar.setBackgroundColor('transparent',true);
 			StatusBar.setTranslucent(true);
-		}
-    const bgImage = "https://antiqueruby.aliansoftware.net//Images/profile/thumbnail_profile_ptwentyfour.png";
+    }
+    
+
+    const bgImage =  this.props.driverInformation.Avatar!=undefined && this.props.driverInformation.Avatar!=""?
+                    this.props.driverInformation.Avatar:
+                    "https://3znvnpy5ek52a26m01me9p1t-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/noimage_person.png";
 
     return(
       <Container style={styles.main}>

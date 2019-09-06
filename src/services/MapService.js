@@ -62,6 +62,18 @@ export default class MapService {
             return result.json();
         });
     }
+
+    getCarIdFromPassenger(request) {
+        return fetch(this.host.ServiceUrl + 'Map/GetCarIdFromPassenger', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(request),
+        }).then(function (result) {
+            return result.json();
+        });
+    }
 }
 
 

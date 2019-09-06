@@ -10,7 +10,8 @@ export { default as GetVoyagesModel } from './GetVoyagesModel';
 export { default as GetAracDetailsByAracId } from './GetAracDetailsByAracId';
 export { default as TokenRequestModel } from './TokenRequestModel';
 export { default as GetDriverInformationRequestModel } from './GetDriverInformationRequestModel';
-export { default as GetAracDetailsByAracId } from './GetAracDetailsByAracId';
+export { default as GetCarIdFromPassengerRequestModel } from './GetCarIdFromPassengerRequestModel';
+
 
 
 

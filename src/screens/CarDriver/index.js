@@ -2,19 +2,23 @@ import React, { Component } from 'react';
 import { Container,  Content, Icon,Tabs,Tab,TabHeading,Text} from 'native-base';
 import DriverProfileScreen from '../tabs/cardriver/DriverProfile'
 import CarProfileScreen from '../tabs/cardriver/CarProfile'
-import {GetAracDetailsByAracId,GetDriverInformationRequestModel,GetAracDetailsByAracId} from '../../models';
-import {PuantajService,DriverService} from '../../services';
+import {GetAracDetailsByAracId,GetDriverInformationRequestModel,GetCarIdFromPassengerRequestModel} from '../../models';
+import {PuantajService,DriverService,MapService} from '../../services';
+import {  AsyncStorage} from "react-native";
+
+var StorageKeys=require('../../data/StorageKeys.json');
+var passengerId=0;
 
 export default class CarDriverScreen extends Component {
   
   puantajService=new PuantajService();
   driverService=new DriverService();
+  mapService=new MapService();
 
   constructor(props){
     super(props);
 
     this.state = {
-      tokenRequestModel: new TokenRequestModel(),
       carImages:[],      
       driverInformation:{},      
       carDetail: {
@@ -23,7 +27,10 @@ export default class CarDriverScreen extends Component {
     }
 
     this.getCarImages=this.getCarImages.bind(this);
+    this.getCarDetails=this.getCarDetails.bind(this);
     this.getDriverInformation=this.getDriverInformation.bind(this);
+    this.getCarIdFromPassenger=this.getCarIdFromPassenger.bind(this);
+    
   }
   render() {
     return (
@@ -40,6 +47,16 @@ export default class CarDriverScreen extends Component {
       </Content>
      </Container>  
     );
+  }
+
+  componentDidMount (){
+    AsyncStorage.getItem(StorageKeys.PassengerDetailKey)
+    .then( value => {    
+      var parsedUserDetail= JSON.parse(value);
+      let passengerId=parsedUserDetail["PassengerId"];
+
+      this.getCarIdFromPassenger(passengerId)
+    })
   }
 
     //api methods
@@ -65,6 +82,7 @@ export default class CarDriverScreen extends Component {
       request.DType = "9";
   
       this.puantajService.getAracResimlerByAracId(request).then(responseJson => {
+
           if (responseJson.Data && responseJson.Data.imageList.length > 0) {              
             this.setState({
               carImages: responseJson.Data.imageList
@@ -90,6 +108,24 @@ export default class CarDriverScreen extends Component {
       }).catch((error) => {
           console.log(error);
       });
-    }
+    }  
 
+    getCarIdFromPassenger(passengerId){
+      var model=new GetCarIdFromPassengerRequestModel();
+      model.PassengerId=passengerId;
+      
+      this.mapService.getCarIdFromPassenger(model).then(responseJson => {
+
+          if (!responseJson.IsSuccess) {          
+              return;       
+          }
+
+          this.getCarDetails(responseJson.Data.CarId)
+          this.getCarImages(responseJson.Data.CarId)
+          this.getDriverInformation(responseJson.Data.PersonId);  
+      }).catch((error) => {
+          console.log(error);
+      });
+    }
+    
 }

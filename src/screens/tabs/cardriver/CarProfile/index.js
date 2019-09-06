@@ -25,7 +25,7 @@ export default class CarProfileScreen extends Component {
 
         <Content>
         <View style={styles.detailsView}>
-          <Text style={styles.nameTxt}>{this.props.carDetail.plaka}</Text>      
+          <Text style={styles.nameTxt}>{this.props.carDetail!=null?this.props.carDetail.plaka:""}</Text>      
         </View>
         </Content>
 

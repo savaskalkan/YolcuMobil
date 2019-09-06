@@ -1,6 +1,6 @@
 export default class Host
 {
-    ServiceUrl = "http://apibms.cetur.com.tr/api/";
+    ServiceUrl = "http://192.168.1.7/api/";
     //Prod http://apibms.cetur.com.tr/api/
-    //Local http://172.20.10.9/api/
+    //Local http://192.168.1.7/api/
 }
