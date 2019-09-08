@@ -74,6 +74,30 @@ export default class MapService {
             return result.json();
         });
     }
+
+    getBusStops(request) {
+        return fetch(this.host.ServiceUrl + 'Map/GetBusStops', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(request),
+        }).then(function (result) {
+            return result.json();
+        });
+    }
+
+    getPassengersAtBusStop(request) {
+        return fetch(this.host.ServiceUrl + 'Map/GetPassengersAtBusStop', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(request),
+        }).then(function (result) {
+            return result.json();
+        });
+    }
 }
 
 

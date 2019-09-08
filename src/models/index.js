@@ -11,6 +11,8 @@ export { default as GetAracDetailsByAracId } from './GetAracDetailsByAracId';
 export { default as TokenRequestModel } from './TokenRequestModel';
 export { default as GetDriverInformationRequestModel } from './GetDriverInformationRequestModel';
 export { default as GetCarIdFromPassengerRequestModel } from './GetCarIdFromPassengerRequestModel';
+export { default as GetBusStopsModel } from './GetBusStopsModel';
+export { default as GetPassengersAtBusStopModel } from './GetPassengersAtBusStopModel';
 
 
 
