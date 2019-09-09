@@ -31,19 +31,6 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: Fonts.moderateScale(20)
   },
-
-  PassengerReanderBg: {
-    width: Metrics.WIDTH,
-    ...Platform.select({
-      ios: {
-        height: Metrics.HEIGHT * 0.99
-      },
-      android: {
-        height: Metrics.HEIGHT * 0.96
-      }
-    }),
-    backgroundColor: "#f5f5f5"
-  },  
   
   exitButton:{
     marginRight:40,
@@ -55,6 +42,13 @@ const styles = StyleSheet.create({
     borderRadius:10,
     borderWidth: 1,
     borderColor: '#fff'
+  },
+
+  buttonText:{
+      color:'#fff',
+      textAlign:'center',
+      paddingLeft : 10,
+      paddingRight : 10
   },
 
   NewsCategoryText: {
@@ -96,6 +90,32 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5"
   },
 
+  PassengerReanderBg: {
+    width: Metrics.WIDTH,
+    ...Platform.select({
+      ios: {
+        height: Metrics.HEIGHT * 0.80
+      },
+      android: {
+        height: Metrics.HEIGHT * 0.78
+      }
+    }),
+    backgroundColor: "#f5f5f5"
+  },
+  
+  PassengerExitBg: {
+    width: Metrics.WIDTH,
+    ...Platform.select({
+      ios: {
+        height: Metrics.HEIGHT * 0.10
+      },
+      android: {
+        height: Metrics.HEIGHT * 0.10
+      }
+    }),
+    backgroundColor: "#f5f5f5"
+  },
+
   mainContentBg: {
     alignSelf: "center",
     width: Metrics.WIDTH * 0.91
@@ -130,6 +150,19 @@ const styles = StyleSheet.create({
     fontSize: Fonts.moderateScale(15),
     // fontFamily: Fonts.type.sfuiDisplaySemibold,,
     marginLeft: Metrics.HEIGHT * 0.01
+  },
+
+  PassengerName: {
+    color: Colors.cetur,
+    fontSize: Fonts.moderateScale(15),
+    marginLeft: Metrics.HEIGHT * 0.005
+  },
+
+  PassengerGsmNumber: {
+    color: "#31373d",
+    fontSize: Fonts.moderateScale(14),
+    marginTop: Metrics.HEIGHT * 0.01,
+    marginLeft: Metrics.HEIGHT * 0.02
   },
 
   HorizontalDivider: {

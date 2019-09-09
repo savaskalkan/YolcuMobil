@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Alert} from 'react-native'
 import {
   View,
   TouchableOpacity,
@@ -8,6 +9,7 @@ import { Metrics } from "../../../../themes/";
 import styles from "./styles";
 import {GetPassengersAtBusStopModel} from '../../../models';
 import MapService from '../../../services/MapService';
+import * as Constant from '../../../data/Constants';
 
 export default class PassengersModalScreen extends Component {
   mapService=new MapService();
@@ -33,8 +35,8 @@ export default class PassengersModalScreen extends Component {
   render() {
     return (
       <View style={styles.mainView}>      
-        <View style={styles.MainReanderBg}>   
-          <Text style={styles.NewsCategoryText}> {this.selectedBusStopName} Yolcuları</Text>
+        <View style={styles.PassengerReanderBg}>   
+          <Text style={styles.NewsCategoryText}> {this.selectedBusStopName}</Text>
           <Content>
             {this.state.passengersData.map((item, index) => {
               return (
@@ -46,25 +48,39 @@ export default class PassengersModalScreen extends Component {
                         marginTop: Metrics.HEIGHT * 0.01
                       }}
                     >
-                      <Text style={styles.BusStopNumber}>
+                      <Text style={styles.PassengerName}>
                         {item.PassengerName} {item.PassengerSurname}
                       </Text>
                     </View>
-                    <Text style={styles.CurrentBusStop}>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        marginTop: Metrics.HEIGHT * 0.01
+                      }}
+                    >
+                    <Text style={styles.PassengerGsmNumber}>
                       {item.PassengerGsmNumber}
                     </Text>
+                    </View>
                   <View style={styles.HorizontalDivider} />
                 </View>
               );
             })}
-             <TouchableOpacity
-                              style={styles.exitButton}
-                              onPress={this.props.navigation.goBack()}
-                              underlayColor='#fff'>
-                              <Text style={styles.buttonText}>Kapat</Text>
-                    </TouchableOpacity>
           </Content>
         </View>
+        <Grid>
+              <Row style={{ alignContent: "center", alignItems: "center" }}>
+                  <Col size={50} >          
+                    <TouchableOpacity
+                        style={styles.exitButton}
+                        onPress={() => this.props.navigation.goBack()}
+                        underlayColor='#fff'>
+                              <Text style={styles.buttonText}>Kapat</Text>
+                    </TouchableOpacity>
+                  </Col>
+              </Row>
+          </Grid>
     </View>
     );
   }
@@ -76,7 +92,9 @@ export default class PassengersModalScreen extends Component {
     model.BusStopId=busStopId;
 
     this.mapService.getPassengersAtBusStop(model).then(responseJson => {
-        if (!responseJson.IsSuccess) {             
+        if (!responseJson.IsSuccess) { 
+            Alert.alert(Constant.WarningText, "Yolcu bulunamadı");   
+            this.props.navigation.goBack()            
             return;       
         }    
         

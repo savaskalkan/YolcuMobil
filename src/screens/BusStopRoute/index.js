@@ -57,7 +57,7 @@ export default class BusStopRouteScreen extends Component {
                         onPress={() => {
                           this.props.navigation.navigate('PassengersModal',{
                             SelectedBusStopId: item.id,
-                            SelectedBusStopName:item.BusStopName
+                            SelectedBusStopName:item.BusStopName+" Yolcuları"
                           })
                         }}
                       >
