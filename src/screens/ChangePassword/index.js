@@ -48,13 +48,15 @@ export default class ChangePasswordScreen extends Component {
   }
 
   componentDidMount (){
+    AsyncStorage.setItem(StorageKeys.WhereIsServiceTimerEnableKey,"false");  
+
     AsyncStorage.getItem(StorageKeys.PassengerDetailKey)
     .then( value => {    
       var parsedUserDetail= JSON.parse(value);
       passengerId=parsedUserDetail["PassengerId"];
     })
   }
-
+  
   render() {
     StatusBar.setBarStyle("light-content", true);
 
@@ -62,7 +64,7 @@ export default class ChangePasswordScreen extends Component {
       StatusBar.setBackgroundColor("transparent", true);
       StatusBar.setTranslucent(true);
     }
-
+    
     return (
       <ImageBackground source={Images.walkthroughBackground} style={styles.screenBg}>
         <View style={styles.container}>

@@ -13,6 +13,7 @@ export { default as GetDriverInformationRequestModel } from './GetDriverInformat
 export { default as GetCarIdFromPassengerRequestModel } from './GetCarIdFromPassengerRequestModel';
 export { default as GetBusStopsModel } from './GetBusStopsModel';
 export { default as GetPassengersAtBusStopModel } from './GetPassengersAtBusStopModel';
+export { default as GetWehicleLocationInformationModel } from './GetWehicleLocationInformationModel';
 
 
 

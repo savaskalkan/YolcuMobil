@@ -33,6 +33,8 @@ export default class CarDriverScreen extends Component {
     
   }
   render() {
+    AsyncStorage.setItem(StorageKeys.WhereIsServiceTimerEnableKey,"false");  
+    
     return (
       <Container>
       <Content> 
@@ -48,7 +50,7 @@ export default class CarDriverScreen extends Component {
      </Container>  
     );
   }
-
+  
   componentDidMount (){
     AsyncStorage.getItem(StorageKeys.PassengerDetailKey)
     .then( value => {    

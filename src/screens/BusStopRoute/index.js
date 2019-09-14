@@ -32,6 +32,52 @@ export default class BusStopRouteScreen extends Component {
 
   //compoenent life cycle
   render() {
+    AsyncStorage.setItem(StorageKeys.WhereIsServiceTimerEnableKey,"false");  
+
+    if(this.state.busStopData.length>0){
+      return this.existBusStopData();
+    }
+    else{
+      return this.notExistBusStopData();
+    }
+  }
+
+  componentDidMount() {
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+        this.getStationAndDirections();
+    });
+  }
+  
+  componentWillUnmount() {
+    this.focusListener.remove();
+  }
+
+  //operation methods
+  getStationAndDirections=()=>{
+    AsyncStorage.getAllKeys((err, keys) => {
+      AsyncStorage.multiGet(keys, (err, stores) => {
+        let passengerId="0";
+
+        stores.map((result, i, store) => {
+          let key = store[i][0];
+          let value = store[i][1];
+
+          if(key==StorageKeys.PassengerDetailKey){
+            var parsedUserDetail= JSON.parse(value);
+            passengerId=parsedUserDetail["PassengerId"];
+          }
+          else if(key==StorageKeys.SelectedVoyageId)
+             selectedVoyageId=value;
+        });
+
+        this.getDirections(selectedVoyageId);
+        this.getBusStops(selectedVoyageId,passengerId);
+      });
+    });
+  }
+
+  //render methods
+  existBusStopData(){
     return (
       <View style={styles.mainView}>        
         <View style={styles.MapReanderBg}>
@@ -94,40 +140,11 @@ export default class BusStopRouteScreen extends Component {
     );
   }
 
-  componentDidMount() {
-    this.focusListener = this.props.navigation.addListener("didFocus", () => {
-        this.getStationAndDirections();
-    });
+  notExistBusStopData(){
+    return(
+      <WebView source={{uri: this.state.webViewSource}} />
+    );
   }
-  
-  componentWillUnmount() {
-    this.focusListener.remove();
-  }
-
-  //operation methods
-  getStationAndDirections=()=>{
-    AsyncStorage.getAllKeys((err, keys) => {
-      AsyncStorage.multiGet(keys, (err, stores) => {
-        let passengerId="0";
-
-        stores.map((result, i, store) => {
-          let key = store[i][0];
-          let value = store[i][1];
-
-          if(key==StorageKeys.PassengerDetailKey){
-            var parsedUserDetail= JSON.parse(value);
-            passengerId=parsedUserDetail["PassengerId"];
-          }
-          else if(key==StorageKeys.SelectedVoyageId)
-             selectedVoyageId=value;
-        });
-
-        this.getDirections(selectedVoyageId);
-        this.getBusStops(selectedVoyageId,passengerId);
-      });
-    });
-  }
-
   //get items from api
   getDirections=()=>{
     var model=new GetDirectionsModel();

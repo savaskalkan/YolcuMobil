@@ -75,10 +75,12 @@ export default class MainScreen extends Component {
   }
 
   render() {
+    AsyncStorage.setItem(StorageKeys.WhereIsServiceTimerEnableKey,"false");
+
     if (Platform.OS == "android") {
       StatusBar.setTranslucent(true);
-    } 
-
+    }  
+    
     return (
         <View style={styles.MainBG}>
           <Text style={styles.NewsCategoryText}>Hoşgeldiniz {this.state.firstName+" "+this.state.lastName}</Text>

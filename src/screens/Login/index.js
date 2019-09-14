@@ -44,7 +44,7 @@ export default class LoginScreen extends Component {
 
     this.loginOperation=this.loginOperation.bind(this)
   }
-
+  
   componentWillMount() {
     AsyncStorage.getItem(StorageKeys.IsLoginKey, (error,value) => {      
       if(value=="true"){
@@ -60,6 +60,8 @@ export default class LoginScreen extends Component {
   }
 
   render() {
+    AsyncStorage.setItem(StorageKeys.WhereIsServiceTimerEnableKey,"false");  
+    
     StatusBar.setBarStyle("light-content", true);
 
     if (Platform.OS === "android") {

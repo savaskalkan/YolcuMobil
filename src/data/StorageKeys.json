@@ -4,5 +4,6 @@
     "PassengerDetailKey":"PassengerDetail",
     "SelectedProjectId":"SelectedProjectId",
     "SelectedRouteId":"SelectedRouteId",
-    "SelectedVoyageId":"SelectedVoyageId"
+    "SelectedVoyageId":"SelectedVoyageId",
+    "WhereIsServiceTimerEnableKey":"WhereIsServiceTimerEnable"
 }

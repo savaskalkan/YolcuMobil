@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
-import {AsyncStorage,WebView} from 'react-native';
-import {GetDirectionsModel} from '../../models';
+import {AsyncStorage,
+  WebView,
+  View,
+  Text
+} from 'react-native';
+  import { Content} from "native-base";
+import {GetDirectionsModel,GetWehicleLocationInformationModel} from '../../models';
 import MapService from '../../services/MapService';
+import ArventoService from '../../services/ArventoService';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions'
+import styles from "./styles";
+import { Metrics } from "../../../themes/";
 
 var StorageKeys=require('../../data/StorageKeys.json');
 
 export default class WhereIsServiceScreen extends Component {
   mapService=new MapService();
+  arventoService=new ArventoService();
   mapView=null;
+  selectedVoyageId=0;
+  passengerId=0;
 
   constructor(props){
     super(props); 
@@ -15,18 +28,23 @@ export default class WhereIsServiceScreen extends Component {
     this.state={
       stations:[],
       direction:{},
-      webViewSource:"https://www.google.com/maps/"
+      webViewSource:"https://www.google.com/maps/",
+      informationData: null,
+      timer: null,
+      counter:30
     }
   }  
 
   //compoenent life cycle
   render() {
-    return (
-       <WebView source={{uri: this.state.webViewSource}} />
-    );
-  }
+    AsyncStorage.setItem(StorageKeys.WhereIsServiceTimerEnableKey,"true");  
 
-  componentWillMount(){
+    if(this.state.informationData!=null){
+      return this.existInformationData();
+    }
+    else{
+      return this.notExistInformationData();
+    }
   }
 
   componentDidMount() {
@@ -37,29 +55,143 @@ export default class WhereIsServiceScreen extends Component {
   
   componentWillUnmount() {
     this.focusListener.remove();
+
+    this.clearInterval(this.state.timer);
+  }
+
+  tick =() => {
+    AsyncStorage.getItem(StorageKeys.WhereIsServiceTimerEnableKey, (error,value) => {    
+      if(value=="true"){   
+        let newCounter=this.state.counter-1;
+
+        if(newCounter==-1){
+          this.getLocationAsync();
+          newCounter=30;
+        }
+
+        this.setState({
+          counter: newCounter
+        });
+      }  
+    }); 
+  }
+
+  //render methods
+  existInformationData(){   
+    return (
+      <View style={styles.mainView}>        
+        <View style={styles.MapReanderBg}>
+          <WebView source={{uri: this.state.webViewSource}} />
+        </View>
+        <View style={styles.MainReanderBg}>
+            <Content style={styles.content}>
+                <View
+                    style={
+                      [styles.rowBg, { marginTop: Metrics.WIDTH * 0.05 }]
+                    }
+                    key={1}
+                  >
+                    <View style={styles.rowField}>
+                      <Text style={styles.fieldLabelTxt}>Durağınız</Text>
+                      <Text style={styles.fieldDescriptionTxt}>{this.state.informationData.BusStopName}</Text>
+                    </View>
+                    <View style={styles.rowListDivider} />
+
+                    <View style={styles.rowField}>
+                      <Text style={styles.fieldLabelTxt}>Aracın Konumu</Text>
+                      <Text style={styles.fieldDescriptionTxt}>{this.state.informationData.WehicleCoordinate}</Text>
+                    </View>
+                    <View style={styles.rowListDivider} />
+
+                    <View style={styles.rowField}>
+                      <Text style={styles.fieldLabelTxt}>Kalan Süre Tahmini</Text>
+                      <Text numberOfLines={1} style={styles.fieldDescriptionTxt}>
+                        {this.state.informationData.EstimateTime}
+                      </Text>
+                    </View>
+                    <View style={styles.rowListDivider} />
+
+                    <View style={styles.rowField}>
+                      <Text style={styles.fieldLabelTxt}>Yenilenme Süresi</Text>
+                      <Text style={styles.fieldTimer}>{this.state.counter}</Text>
+                    </View>
+                    <View style={styles.rowListDivider} />
+               </View>
+            </Content>
+         </View>
+      </View>
+    );
+  }
+
+  notExistInformationData(){
+    return (
+      <WebView source={{uri: this.state.webViewSource}} />
+    );
   }
 
   //operation methods
   getStationAndDirections=()=>{
-    AsyncStorage.multiGet([ StorageKeys.SelectedVoyageId]).then(response => {
-        let selectedVoyageId=response[0][1];
-        if(selectedVoyageId==0)
-          return;
+    AsyncStorage.getAllKeys((err, keys) => {
+      AsyncStorage.multiGet(keys, (err, stores) => {        
+        stores.map((result, i, store) => {
+          let key = store[i][0];
+          let value = store[i][1];
 
-        this.getDirections(selectedVoyageId);
-    })
+          if(key==StorageKeys.PassengerDetailKey){
+            var parsedUserDetail= JSON.parse(value);
+            passengerId=parsedUserDetail["PassengerId"];
+          }
+          else if(key==StorageKeys.SelectedVoyageId)
+             selectedVoyageId=value;
+        });
+
+        this.getDirections();
+
+        this.getLocationAsync();        
+
+        if(this.state.timer==null){
+          let timer = setInterval(this.tick, 1000);
+          this.setState({timer});
+        }
+      });
+    });
   }
 
   //get items from api
-  getDirections=(voyageId)=>{
+  getDirections=()=>{
     var model=new GetDirectionsModel();
-    model.VoyageId=voyageId;
+    model.VoyageId=selectedVoyageId;
 
     this.mapService.getDirections(model).then(responseJson => {
         if (!responseJson.IsSuccess) {             
             return;       
         }      
         this.openGoogleMapApplication(responseJson.Data.Direction);
+    }).catch((error) => {
+        console.log(error);
+    });
+  }
+
+  getWehicleLocationInformation=(userLocation)=>{
+
+    var model=new GetWehicleLocationInformationModel();
+    model.VoyageId=selectedVoyageId;
+    model.PassengerId=passengerId;
+    model.UserLatitude=userLocation.latitude;
+    model.UserLongitude=userLocation.longitude;
+
+    this.arventoService.getWehicleLocationInformation(model).then(responseJson => {
+        if (!responseJson.IsSuccess) {             
+            return;       
+        }    
+        this.setState({
+          informationData:{
+            BusStopName:responseJson.Data.BusStopName,
+            WehicleCoordinate:responseJson.Data.WehicleCoordinate,
+            EstimateTime:responseJson.Data.EstimateTime,
+            LoadingTime:30
+          }
+        })
     }).catch((error) => {
         console.log(error);
     });
@@ -86,5 +218,18 @@ export default class WhereIsServiceScreen extends Component {
     });
   }
 
+  //get current location
+  getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        locationResult: 'Lokasyona erişim izni verilmedi',
+        location,
+      });
+    }
+    let location = await Location.getCurrentPositionAsync({});
+
+    this.getWehicleLocationInformation(location.coords)
+  }
 
 }
