@@ -14,4 +14,16 @@ export default class ArventoService {
             return result.json();
         });
     }
+
+    voyageAmoungTimeControl(request) {
+        return fetch(this.host.ServiceUrl + 'Arvento/VoyageAmoungTimeControl', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(request),
+        }).then(function (result) {
+            return result.json();
+        });
+    }
 }

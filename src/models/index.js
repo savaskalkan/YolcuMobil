@@ -14,6 +14,7 @@ export { default as GetCarIdFromPassengerRequestModel } from './GetCarIdFromPass
 export { default as GetBusStopsModel } from './GetBusStopsModel';
 export { default as GetPassengersAtBusStopModel } from './GetPassengersAtBusStopModel';
 export { default as GetWehicleLocationInformationModel } from './GetWehicleLocationInformationModel';
+export { default as VoyageAmoungTimeControlModel } from './VoyageAmoungTimeControlModel';
 
 
 

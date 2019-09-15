@@ -5,5 +5,6 @@
     "SelectedProjectId":"SelectedProjectId",
     "SelectedRouteId":"SelectedRouteId",
     "SelectedVoyageId":"SelectedVoyageId",
+    "SelectedVoyageIdWhereIsKey":"SelectedVoyageIdWhereIs",
     "WhereIsServiceTimerEnableKey":"WhereIsServiceTimerEnable"
 }

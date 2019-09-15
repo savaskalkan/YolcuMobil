@@ -67,11 +67,11 @@ export default class BusStopRouteScreen extends Component {
             passengerId=parsedUserDetail["PassengerId"];
           }
           else if(key==StorageKeys.SelectedVoyageId)
-             selectedVoyageId=value;
+             this.selectedVoyageId=value;
         });
 
-        this.getDirections(selectedVoyageId);
-        this.getBusStops(selectedVoyageId,passengerId);
+        this.getDirections();
+        this.getBusStops(passengerId);
       });
     });
   }
@@ -148,7 +148,7 @@ export default class BusStopRouteScreen extends Component {
   //get items from api
   getDirections=()=>{
     var model=new GetDirectionsModel();
-    model.VoyageId=selectedVoyageId;
+    model.VoyageId=this.selectedVoyageId;
 
     this.mapService.getDirections(model).then(responseJson => {
         if (!responseJson.IsSuccess) {             
@@ -162,7 +162,7 @@ export default class BusStopRouteScreen extends Component {
 
   getBusStops=(passengerId)=>{
     var model=new GetBusStopsModel();
-    model.VoyageId=selectedVoyageId;
+    model.VoyageId=this.selectedVoyageId;
     model.PassengerId=passengerId;
 
     this.mapService.getBusStops(model).then(responseJson => {

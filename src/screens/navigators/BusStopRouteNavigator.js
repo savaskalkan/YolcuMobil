@@ -1,6 +1,6 @@
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import BusStopRoute from '../BusStopRoute'
-import WhereIsServiceModalScreen from '../modals/WhereIsServiceModalScreen'
+import BusStopServiceModalScreen from '../modals/BusStopServiceModalScreen'
 import PassengersModalScreen from '../modals/Passengers/PassengersModalScreen'
 
 const RootStack = createStackNavigator(
@@ -9,7 +9,7 @@ const RootStack = createStackNavigator(
       screen: BusStopRoute,
     },
     BusStopRouteModal: {
-      screen: WhereIsServiceModalScreen,
+      screen: BusStopServiceModalScreen,
     },
     PassengersModal: {
       screen: PassengersModalScreen,

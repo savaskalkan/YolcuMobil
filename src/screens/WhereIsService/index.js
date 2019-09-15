@@ -139,12 +139,11 @@ export default class WhereIsServiceScreen extends Component {
 
           if(key==StorageKeys.PassengerDetailKey){
             var parsedUserDetail= JSON.parse(value);
-            passengerId=parsedUserDetail["PassengerId"];
+            this.passengerId=parsedUserDetail["PassengerId"];
           }
-          else if(key==StorageKeys.SelectedVoyageId)
-             selectedVoyageId=value;
+          else if(key==StorageKeys.SelectedVoyageIdWhereIsKey)
+             this.selectedVoyageId=value;
         });
-
         this.getDirections();
 
         this.getLocationAsync();        
@@ -160,7 +159,7 @@ export default class WhereIsServiceScreen extends Component {
   //get items from api
   getDirections=()=>{
     var model=new GetDirectionsModel();
-    model.VoyageId=selectedVoyageId;
+    model.VoyageId=this.selectedVoyageId;
 
     this.mapService.getDirections(model).then(responseJson => {
         if (!responseJson.IsSuccess) {             
@@ -175,8 +174,8 @@ export default class WhereIsServiceScreen extends Component {
   getWehicleLocationInformation=(userLocation)=>{
 
     var model=new GetWehicleLocationInformationModel();
-    model.VoyageId=selectedVoyageId;
-    model.PassengerId=passengerId;
+    model.VoyageId=this.selectedVoyageId;
+    model.PassengerId=this.passengerId;
     model.UserLatitude=userLocation.latitude;
     model.UserLongitude=userLocation.longitude;
 

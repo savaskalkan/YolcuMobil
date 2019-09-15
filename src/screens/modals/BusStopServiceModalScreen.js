@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container,  Content,  Grid, Row, Col } from 'native-base';
 import { Dropdown } from 'react-native-material-dropdown';
-import {GetProjectsModel,GetRoutesModel,GetVoyagesModel,VoyageAmoungTimeControlModel} from '../../models';
+import {GetProjectsModel,GetRoutesModel,GetVoyagesModel} from '../../models';
 import MapService from '../../services/MapService';
 import ArventoService from '../../services/ArventoService';
 import {AsyncStorage,Alert} from 'react-native';
@@ -11,7 +11,7 @@ import { Colors } from "../../../themes";
 
 var StorageKeys=require('../../data/StorageKeys.json');
 
-export default class WhereIsServiceModalScreen extends Component {
+export default class BusStopServiceModalScreen extends Component {
   mapService=new MapService();
   arventoService=new ArventoService();
 
@@ -64,7 +64,7 @@ export default class WhereIsServiceModalScreen extends Component {
      
              this.getProjects(passengerId);
           }
-          else if(key==StorageKeys.SelectedVoyageIdWhereIsKey)
+          else if(key==StorageKeys.SelectedVoyageId)
             voyageId=value;
         });
 
@@ -128,12 +128,13 @@ export default class WhereIsServiceModalScreen extends Component {
       Alert.alert(Constant.ErrorText,"Sefer seçmelisiniz")
       return;
     } 
-    
-    this.voyageAmoungTimeControl(this.state.selectedVoyageId);
+
+    AsyncStorage.multiSet([[StorageKeys.SelectedVoyageId,this.state.selectedVoyageId.toString()]]);
+    this.props.navigation.goBack();
   }
 
   exitOperation(){    
-    AsyncStorage.multiSet([[StorageKeys.SelectedVoyageIdWhereIsKey,"0"]]);
+    AsyncStorage.multiSet([[StorageKeys.SelectedVoyageId,"0"]]);
 
     this.props.navigation.goBack();
   }
@@ -228,24 +229,6 @@ export default class WhereIsServiceModalScreen extends Component {
               value:voyage.VoyageDescription
             })
         });
-    }).catch((error) => {
-        console.log(error);
-    });
-  }
-
-  voyageAmoungTimeControl=(voyageId)=>{
-    var model=new VoyageAmoungTimeControlModel();
-    model.VoyageId=voyageId;
-
-    this.arventoService.voyageAmoungTimeControl(model).then(responseJson => {
-        if (!responseJson.IsSuccess) { 
-            Alert.alert(Constant.WarningText, responseJson.ExceptionMsg);   
-            return;       
-        }    
-        
-        AsyncStorage.multiSet([[StorageKeys.SelectedVoyageIdWhereIsKey,voyageId.toString()]]);
-        this.props.navigation.goBack();
-
     }).catch((error) => {
         console.log(error);
     });

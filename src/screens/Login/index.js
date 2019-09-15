@@ -46,6 +46,8 @@ export default class LoginScreen extends Component {
   }
   
   componentWillMount() {
+    AsyncStorage.setItem(StorageKeys.SelectedVoyageId,"0");  
+
     AsyncStorage.getItem(StorageKeys.IsLoginKey, (error,value) => {      
       if(value=="true"){
         this.props.navigation.navigate(NavigateKeys.MenuKey);
