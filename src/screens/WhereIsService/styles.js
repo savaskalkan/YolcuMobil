@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 	fieldLabelTxt: {
 		color: "#959595",
 		fontSize: Fonts.moderateScale(15),
-		fontFamily: Fonts.type.helveticaNeueLight,
+		//fontFamily: Fonts.type.helveticaNeueLight,
 		width: Metrics.WIDTH * 0.32,
 		textAlign: 'left'
 	},
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 	fieldDescriptionTxt: {
 		color: "#111111",
 		fontSize: Fonts.moderateScale(15),
-		fontFamily: Fonts.type.helveticaNeueLight,
+		//fontFamily: Fonts.type.helveticaNeueLight,
 		width: Metrics.WIDTH * 0.48,
 		marginLeft: Metrics.WIDTH * 0.03,
 		textAlign: 'right',
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
 	fieldTimer: {
 		color: "red",
 		fontSize: Fonts.moderateScale(15),
-		fontFamily: Fonts.type.helveticaNeueLight,
+		//fontFamily: Fonts.type.helveticaNeueLight,
 		width: Metrics.WIDTH * 0.48,
 		marginLeft: Metrics.WIDTH * 0.03,
 		textAlign: 'right',
