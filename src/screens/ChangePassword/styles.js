@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     height: Metrics.HEIGHT * 0.08
   },
   inputemail: {
-    fontFamily: Fonts.type.SFUIDisplayRegular,
+    //fontFamily: Fonts.type.SFUIDisplayRegular,
     color: Colors.white
   },
 
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   buttonsignin: {
     alignSelf: "center",
     fontSize: 15,
-    fontFamily: Fonts.type.SFUIDisplaySemibold,
+    //fontFamily: Fonts.type.SFUIDisplaySemibold,
     color: "white"
   },
 
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
 
   buttontext: {
     alignSelf: "center",
-    fontFamily: Fonts.type.SFUIDisplayRegular,
+    //fontFamily: Fonts.type.SFUIDisplayRegular,
     color: "white",
     fontSize: Fonts.moderateScale(16)
   },
