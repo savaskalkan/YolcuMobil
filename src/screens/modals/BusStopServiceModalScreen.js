@@ -23,7 +23,9 @@ export default class BusStopServiceModalScreen extends Component {
       routes:[],
       voyages:[],
       passengerId:0,
+      selectedProjectText:"",
       selectedProjectId:0,
+      selectRouteText:"",
       selectedRouteId:0,
       selectedVoyageId:0
     };
@@ -81,8 +83,8 @@ export default class BusStopServiceModalScreen extends Component {
     return (
       <Container>
         <Content style={{ paddingLeft: 5, paddingRight: 5,paddingTop:30 }}> 
-          <Dropdown label='Projeler' data={this.state.projects} onChangeText={this.onProjectChangeEvent}/>
-          <Dropdown label='Güzergahlar' data={this.state.routes} onChangeText={this.onRouteChangeEvent}/>
+          <Dropdown label='Projeler' data={this.state.projects} value={this.state.selectedProjectText} onChangeText={this.onProjectChangeEvent}/>
+          <Dropdown label='Güzergahlar' data={this.state.routes} value={this.state.selectRouteText} onChangeText={this.onRouteChangeEvent}/>
           <Dropdown label='Seferler' data={this.state.voyages} onChangeText={this.onVoyageChangeEvent}/>
 
           <Grid style={{ paddingLeft: 5, paddingRight: 5, paddingTop: 5, marginTop: 20  }}>
@@ -187,7 +189,16 @@ export default class BusStopServiceModalScreen extends Component {
               key:project.ProjectId,
               value:project.ProjectName
             })
-        });
+        });        
+
+        if(this.state.projects.length==1){
+          this.setState({
+            selectedProjectId:this.state.projects[0].key,
+            selectedProjectText:this.state.projects[0].value
+          });
+
+          this.getRoutes(this.state.projects[0].key)
+        }
     }).catch((error) => {
         console.log(error);
     });
@@ -209,6 +220,15 @@ export default class BusStopServiceModalScreen extends Component {
               value:route.RouteName
             })
         });
+
+        if(this.state.routes.length==1){
+          this.setState({
+            selectedRouteId:this.state.routes[0].key,
+            selectRouteText:this.state.routes[0].value
+          });
+
+          this.getVoyages(this.state.routes[0].key)
+        }
     }).catch((error) => {
         console.log(error);
     });

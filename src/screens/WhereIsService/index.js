@@ -106,7 +106,7 @@ export default class WhereIsServiceScreen extends Component {
                     <View style={styles.rowField}>
                       <Text style={styles.fieldLabelTxt}>Kalan Süre Tahmini</Text>
                       <Text numberOfLines={1} style={styles.fieldDescriptionTxt}>
-                        {this.state.informationData.EstimateTime}
+                        {this.state.informationData.EstimateTime} dk
                       </Text>
                     </View>
                     <View style={styles.rowListDivider} />
