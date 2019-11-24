@@ -81,7 +81,7 @@ export default class WhereIsServiceScreen extends Component {
     return (
       <View style={styles.mainView}>        
         <View style={styles.MapReanderBg}>
-          <WebView source={{uri: this.state.webViewSource}} />
+          <WebView source={{uri: this.state.webViewSource}}  useWebKit={true}/>
         </View>
         <View style={styles.MainReanderBg}>
             <Content style={styles.content}>
@@ -125,7 +125,7 @@ export default class WhereIsServiceScreen extends Component {
 
   notExistInformationData(){
     return (
-      <WebView source={{uri: this.state.webViewSource}} />
+      <WebView source={{uri: this.state.webViewSource}}  useWebKit={true}/>
     );
   }
 

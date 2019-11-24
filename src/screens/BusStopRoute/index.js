@@ -81,7 +81,7 @@ export default class BusStopRouteScreen extends Component {
     return (
       <View style={styles.mainView}>        
         <View style={styles.MapReanderBg}>
-           <WebView source={{uri: this.state.webViewSource}} />
+           <WebView source={{uri: this.state.webViewSource}} useWebKit={true}/>
         </View>
         <View style={styles.MainReanderBg}>
           <Content>
@@ -142,7 +142,7 @@ export default class BusStopRouteScreen extends Component {
 
   notExistBusStopData(){
     return(
-      <WebView source={{uri: this.state.webViewSource}} />
+      <WebView source={{uri: this.state.webViewSource}} useWebKit={true}/>
     );
   }
   //get items from api
