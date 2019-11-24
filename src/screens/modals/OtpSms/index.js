@@ -86,7 +86,6 @@ export default class OtpSmsScreen extends Component {
                         style={styles.inputemail}
                         placeholder='Gsm Numarası'
                         value={this.state.gsmNumber} 
-                        keyboardType="numeric"
                         onChangeText={(value) => this.setState({ gsmNumber: value })} />
                 </Item>
               )}
