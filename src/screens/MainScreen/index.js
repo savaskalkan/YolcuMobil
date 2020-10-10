@@ -35,7 +35,7 @@ var flatlistDataSource = [
   },
   {
     key: 4,
-    title: menuTitle.ChangePasswordScreenTitle
+    title: menuTitle.GotOnOffScreenTitle
   }
 ];
 
@@ -120,7 +120,7 @@ export default class MainScreen extends Component {
     let navigateKey=(key==1)?navigateKeys.CarDriverKey:
                     (key==2)?navigateKeys.BusStopRouteKey:
                     (key==3)?navigateKeys.WhereIsServiceKey:
-                    (key==4)?navigateKeys.ChangePasswordKey:"";
+                    (key==4)?navigateKeys.GotOnOffKey:"";
 
     this.props.navigation.navigate(navigateKey);
   };

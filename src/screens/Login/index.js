@@ -22,18 +22,18 @@ import {
   Form
 } from "native-base";
 import styles from "./styles";
-import {Images} from '../../../themes/';
+import { Images } from '../../../themes/';
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as Constant from '../../data/Constants';
-import {LoginService} from '../../services'
+import { LoginService } from '../../services'
 
-var NavigateKeys=require('../../data/NavigateKeys.json');
-var StorageKeys=require('../../data/StorageKeys.json');
+var NavigateKeys = require('../../data/NavigateKeys.json');
+var StorageKeys = require('../../data/StorageKeys.json');
 
 export default class LoginScreen extends Component {
   loginService = new LoginService();
 
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -42,29 +42,35 @@ export default class LoginScreen extends Component {
       isSpinnerShow: false
     };
 
-    this.loginOperation=this.loginOperation.bind(this)
+    this.loginOperation = this.loginOperation.bind(this)
   }
-  
-  componentWillMount() {
-    AsyncStorage.setItem(StorageKeys.SelectedVoyageId,"0");  
-    AsyncStorage.setItem(StorageKeys.SelectedVoyageIdWhereIsKey,"0");  
 
-    AsyncStorage.getItem(StorageKeys.IsLoginKey, (error,value) => {      
-      if(value=="true"){
+  componentWillMount() {
+    AsyncStorage.setItem(StorageKeys.SelectedVoyageId, "0");
+    AsyncStorage.setItem(StorageKeys.SelectedVoyageIdWhereIsKey, "0");
+
+    AsyncStorage.getItem(StorageKeys.IsLoginKey, (error, value) => {
+      if (value == "true") {
         this.props.navigation.navigate(NavigateKeys.MenuKey);
-      }  
-    }); 
-                  
-    AsyncStorage.getItem(StorageKeys.IsWalkThroughShow, (error,value) => {
-      if(value==null){
+      }
+    });
+
+    AsyncStorage.getItem(StorageKeys.IsWalkThroughShow, (error, value) => {
+      if (value == null) {
         this.props.navigation.navigate(NavigateKeys.WalkthroughKey);
-      } 
+      }
     });
   }
 
+  componentDidMount() {
+    AsyncStorage.getItem("lastUserName").then(lastUserName => {
+      lastUserName && this.setState({ gsmNumber: lastUserName })
+    })
+  }
+
   render() {
-    AsyncStorage.setItem(StorageKeys.WhereIsServiceTimerEnableKey,"false");  
-    
+    AsyncStorage.setItem(StorageKeys.WhereIsServiceTimerEnableKey, "false");
+
     StatusBar.setBarStyle("light-content", true);
 
     if (Platform.OS === "android") {
@@ -74,14 +80,14 @@ export default class LoginScreen extends Component {
 
     return (
       <Container >
-         {this.state.isSpinnerShow &&
-          <Spinner visible={this.state.isSpinnerShow} 
-            textContent={Constant.LoadingText}  
-            textStyle={{color: '#FFF' }} />
+        {this.state.isSpinnerShow &&
+          <Spinner visible={this.state.isSpinnerShow}
+            textContent={Constant.LoadingText}
+            textStyle={{ color: '#FFF' }} />
         }
         <ImageBackground style={styles.backgroundImage} source={Images.walkthroughBackground}>
-        <Header style={styles.header}>
-            <Left style={styles.left}/>
+          <Header style={styles.header}>
+            <Left style={styles.left} />
             <Body style={styles.body} />
             <Right style={styles.right} />
           </Header>
@@ -95,7 +101,7 @@ export default class LoginScreen extends Component {
                 textAlign={I18nManager.isRTL ? "right" : "left"}
                 placeholder="Gsm Numarası"
                 style={styles.inputmain}
-                value={this.state.gsmNumber} 
+                value={this.state.gsmNumber}
                 keyboardType="numeric"
                 onChangeText={(value) => this.setState({ gsmNumber: value })}
               />
@@ -108,7 +114,7 @@ export default class LoginScreen extends Component {
                 textAlign={I18nManager.isRTL ? "right" : "left"}
                 style={styles.inputmain}
                 onChangeText={(value) => this.setState({ userPassword: value })}
-                value={this.state.userPassword} 
+                value={this.state.userPassword}
               />
             </Item>
             <TouchableOpacity
@@ -132,37 +138,38 @@ export default class LoginScreen extends Component {
   }
 
   //methods
-  loginOperation(){
+  loginOperation() {
     //validation
-    if(this.state.gsmNumber===""){
-        Alert.alert(Constant.ErrorText,"Gsm numaranızı giriniz")
-        return;
+    if (this.state.gsmNumber === "") {
+      Alert.alert(Constant.ErrorText, "Gsm numaranızı giriniz")
+      return;
     }
-    if(this.state.userPassword===""){
-        Alert.alert(Constant.ErrorText,"Şifrenizi giriniz")
-        return;
+    if (this.state.userPassword === "") {
+      Alert.alert(Constant.ErrorText, "Şifrenizi giriniz")
+      return;
     }
 
     //control
     this.setState({ isSpinnerShow: true });
- 
-    this.loginService.login(this.state.gsmNumber, this.state.userPassword).then(responseJson => {        
-        setTimeout(()=>{
-            this.setState({ 
-                isSpinnerShow:false
-            });     
-        }, 1500);        
-            
-        if (responseJson.IsSuccess ) {
-            AsyncStorage.setItem(StorageKeys.PassengerDetailKey,JSON.stringify(responseJson.Data.PassengerDetail));
-            AsyncStorage.setItem(StorageKeys.IsLoginKey,"true");            
-            this.props.navigation.navigate(NavigateKeys.MenuKey);
-        }
-        else {
-            Alert.alert(Constant.ErrorText, responseJson.ExceptionMsg);
-        }      
+
+    this.loginService.login(this.state.gsmNumber, this.state.userPassword).then(responseJson => {
+      setTimeout(() => {
+        this.setState({
+          isSpinnerShow: false
+        });
+      }, 1500);
+
+      if (responseJson.IsSuccess) {
+        AsyncStorage.setItem(StorageKeys.PassengerDetailKey, JSON.stringify(responseJson.Data.PassengerDetail));
+        AsyncStorage.setItem(StorageKeys.IsLoginKey, "true");
+        AsyncStorage.setItem(StorageKeys.lastUserName, this.state.gsmNumber); // zvs: son kullanıcıyı asyncde tutalım
+        this.props.navigation.navigate(NavigateKeys.MenuKey);
+      }
+      else {
+        Alert.alert(Constant.ErrorText, responseJson.ExceptionMsg);
+      }
     }).catch((error) => {
-        console.log(error);
+      console.log(error);
     });
-   }
+  }
 }

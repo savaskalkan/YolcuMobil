@@ -7,5 +7,6 @@
     "CarDriverKey":"CarDriver",
     "WhereIsServiceKey":"WhereIsService",
     "ChangePasswordKey":"ChangePassword",
+    "GotOnOffKey":"GotOnOff",
     "ExitKey":"Exit"
 }

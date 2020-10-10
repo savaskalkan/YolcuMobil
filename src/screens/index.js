@@ -6,3 +6,4 @@ export { default as Walkthrough } from './Walkthrough';
 export { default as BusStopRoute } from './BusStopRoute';
 export { default as CarDriver } from './CarDriver';
 export { default as WhereIsService } from './WhereIsService';
+export { default as GotOnOff } from './GotOnOff';

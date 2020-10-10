@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {AsyncStorage,
-  WebView,
   View,
   TouchableOpacity,
   Alert,
   Platform,
   Text,} from 'react-native';
+  import { WebView } from "react-native-webview";
 import {GetDirectionsModel,GetBusStopsModel} from '../../models';
 import MapService from '../../services/MapService';
 import { Content,Grid,Row,Col } from "native-base";

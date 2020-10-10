@@ -3,7 +3,6 @@
     "name": "Cetur Passenger",
     "slug": "PassengerMobil",
     "privacy": "public",
-    "sdkVersion": "34.0.0",
     "platforms": [
       "ios",
       "android",
@@ -26,10 +25,10 @@
     "ios": {
       "supportsTablet": true
     },
-    "android":{
-      "package":"com.ceturpassenger.cetur",
-      "versionCode":1,
-      "permissions":[],
+    "android": {
+      "package": "com.ceturpassenger.cetur",
+      "versionCode": 1,
+      "permissions": [],
       "icon": "./assets/icon.png"
     },
     "description": ""

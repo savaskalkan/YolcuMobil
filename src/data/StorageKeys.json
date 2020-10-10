@@ -6,5 +6,7 @@
     "SelectedRouteId":"SelectedRouteId",
     "SelectedVoyageId":"SelectedVoyageId",
     "SelectedVoyageIdWhereIsKey":"SelectedVoyageIdWhereIs",
-    "WhereIsServiceTimerEnableKey":"WhereIsServiceTimerEnable"
+    "WhereIsServiceTimerEnableKey":"WhereIsServiceTimerEnable",
+    
+    "lastUserName":"lastUserName"
 }
