@@ -63,11 +63,13 @@ const styles = StyleSheet.create({
   itememail: {
     alignSelf: "center",
     width: Metrics.WIDTH * 0.8,
-    height: Metrics.HEIGHT * 0.08
+    height: Metrics.HEIGHT * 0.08,
+    marginTop:10
   },
   inputemail: {
     //fontFamily: Fonts.type.SFUIDisplayRegular,
-    color: Colors.white
+    color: 'gray',
+    fontSize:14,
   },
 
   iconitem: {

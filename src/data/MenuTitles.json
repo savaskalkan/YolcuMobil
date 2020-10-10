@@ -1,9 +1,9 @@
 {
     "MainScreenTitle":"Ana Sayfa",
-    "CarDriverScreenTitle":"Aracım&Sürücüm",
-    "BusStopRouteScreenTitle":"Durağım&Rotam",
+    "CarDriverScreenTitle":"Aracım & Sürücüm",
+    "BusStopRouteScreenTitle":"Durağım & Rotam",
     "WhereIsServiceScreenTitle":"Servisim Nerede?",
     "ChangePasswordScreenTitle":"Şifre Değiştirme",
-    "GotOnOffScreenTitle":"Bindim&İndim",
+    "GotOnOffScreenTitle":"Bindim & İndim",
     "ExitScreenTitle":"Çıkış"
 }

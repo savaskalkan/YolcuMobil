@@ -66,13 +66,13 @@ export default class ChangePasswordScreen extends Component {
     }
     
     return (
-      <ImageBackground source={Images.walkthroughBackground} style={styles.screenBg}>
+      <ImageBackground imageStyle={{ opacity: 0.05 }} source={require('../../../assets/pattern.png')} style={{ width: '100%', height: '100%', }}>
         <View style={styles.container}>
           <View style={styles.view2}>
                <Item underline style={styles.itememail}>
                   <SimpleLineIcons name="key" color="#c9b0c1" size={17} />
                   <Input                
-                        placeholderTextColor={Colors.white}
+                        placeholderTextColor={"gray"}
                         textAlign={I18nManager.isRTL ? "right" : "left"}
                         style={styles.inputemail}
                         secureTextEntry={true} 
@@ -83,7 +83,7 @@ export default class ChangePasswordScreen extends Component {
                <Item underline style={styles.itememail}>
                   <SimpleLineIcons name="lock" color="#c9b0c1" size={17} />
                   <Input                
-                        placeholderTextColor={Colors.white}
+                        placeholderTextColor={"gray"}
                         textAlign={I18nManager.isRTL ? "right" : "left"}
                         style={styles.inputemail}
                         secureTextEntry={true} 
@@ -94,7 +94,7 @@ export default class ChangePasswordScreen extends Component {
                <Item underline style={styles.itememail}>
                   <SimpleLineIcons name="lock" color="#c9b0c1" size={17} />
                   <Input                
-                        placeholderTextColor={Colors.white}
+                        placeholderTextColor={"gray"}
                         textAlign={I18nManager.isRTL ? "right" : "left"}
                         style={styles.inputemail}
                         secureTextEntry={true} 

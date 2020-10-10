@@ -8,9 +8,10 @@ const styles = StyleSheet.create({
   },
 
   MainBG: {
-    width: Metrics.WIDTH,
+    flex:1
+    /* width: Metrics.WIDTH,
     backgroundColor: Colors.cetur,
-    height: Metrics.HEIGHT * 0.9
+    height: Metrics.HEIGHT * 0.9 */
   },
 
   NewsCategoryText: {
