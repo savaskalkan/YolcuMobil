@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, ScrollView, Button as RNButton, Image, ImageBackground, } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Card, CardItem, Body, Button } from 'native-base';
+import { QrService } from '../../services';
+
+var StorageKeys = require('../../data/StorageKeys.json');
 
 const data = {
   arac: "35 S 45987",
@@ -12,11 +15,39 @@ const data = {
   },
   zaman: "08:00 10.10.20"
 }
+
+const sendData = {
+  "QRString": "deneme-test",
+  "PersonId": 1265,
+  "Plaka": "34TL856",
+  "KoltukNo": 3,
+  "WehicleId": 1485,
+  "AracId": 1245,
+  "CoordinateX": "25.56963",
+  "CoordinateY": "32.56326",
+  "Address": "",
+  "ProcessDate": "2020-10-18T21:53"
+}
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [infoData, setInfoData] = useState({ ...data })
   const [isCancel, setIsCancel] = useState(true)
+
+  qrService = new QrService();
+
+  const setQrService = (data) => {
+
+    this.qrService.setQrInfo(data).then(responseJson => {
+      console.log("responseJson", responseJson)
+      if (!responseJson.IsSuccess) {
+        return;
+      }
+
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 
   useEffect(() => {
     (async () => {
@@ -29,6 +60,30 @@ export default function App() {
     setIsCancel(false)
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+
+    AsyncStorage.getItem(StorageKeys.PassengerDetailKey).then(userinfo => {
+      userinfo = JSON.parse(userinfo)
+
+      const datas = data.split("|")
+      const wehicleid = datas[0]
+      const aracid = datas[1]
+      const plaka = datas[2]
+      const koltukno = datas[3]
+      const sendingDatas = {
+        "QRString": data,
+        "PersonId": userinfo.PassengerId,
+        "Plaka": plaka,
+        "KoltukNo": koltukno,
+        "WehicleId": wehicleid,
+        "AracId": aracid,
+        "CoordinateX": "25.56963",
+        "CoordinateY": "32.56326",
+        "Address": "",
+        "ProcessDate": "2020-10-18T21:53"
+      }
+
+      setQrService(sendingDatas)
+    });
   };
 
   if (hasPermission === null) {
@@ -101,7 +156,7 @@ export default function App() {
               </View>
           }
         </View>
-
+        <RNButton buttonstyle={{ backgroundColor: 'red' }} title={'tıkla'} onPress={() => setQrService(sendData)} />
         {scanned && <RNButton buttonstyle={{ backgroundColor: 'red' }} title={'Vazgeç ve Tekrar Okut'} onPress={() => {
           setIsCancel(true)
           setScanned(false)

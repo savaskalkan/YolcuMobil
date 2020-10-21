@@ -153,6 +153,19 @@ export default class LoginScreen extends Component {
     this.setState({ isSpinnerShow: true });
 
     this.loginService.login(this.state.gsmNumber, this.state.userPassword).then(responseJson => {
+      console.log("responseJson login", responseJson)
+      /**
+       * Data:
+          PassengerDetail={
+            FirstName: "Reşit"
+            LastName: "PAyçın"
+            PassengerId: 301
+            UserName: null
+          }
+          ExceptionMsg: null
+          IsSuccess: true
+       * 
+       */
       setTimeout(() => {
         this.setState({
           isSpinnerShow: false
