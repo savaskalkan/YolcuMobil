@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, Button as RNButton, Image, ImageBackground, } from 'react-native';
+import { Text, View, ScrollView, Button as RNButton, Image, ImageBackground, Alert, } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Card, CardItem, Body, Button } from 'native-base';
 import { QrService } from '../../services';
+import * as Location from 'expo-location';
 
 var StorageKeys = require('../../data/StorageKeys.json');
 
@@ -34,14 +35,20 @@ export default function App() {
   const [infoData, setInfoData] = useState({ ...data })
   const [isCancel, setIsCancel] = useState(true)
 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
   qrService = new QrService();
 
   const setQrService = (data) => {
-
+    console.log("location",location)
     this.qrService.setQrInfo(data).then(responseJson => {
       console.log("responseJson", responseJson)
       if (!responseJson.IsSuccess) {
+        Alert.alert("Yolcu Mobil","Bilgiler başarıyla kaydedildi..!")
         return;
+      }else{
+        Alert.alert("Yolcu Mobil","Bilgiler kaydedilirken hata ile karşılaşıldı..!\n" + responseJson.ExceptionMsg )
       }
 
     }).catch((error) => {
@@ -53,9 +60,22 @@ export default function App() {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
+      
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+  
   const handleBarCodeScanned = ({ type, data }) => {
     setIsCancel(false)
     setScanned(true);
@@ -76,8 +96,8 @@ export default function App() {
         "KoltukNo": koltukno,
         "WehicleId": wehicleid,
         "AracId": aracid,
-        "CoordinateX": "25.56963",
-        "CoordinateY": "32.56326",
+        "CoordinateX": location.coords.latitude,
+        "CoordinateY": location.coords.longitude,
         "Address": "",
         "ProcessDate": "2020-10-18T21:53"
       }

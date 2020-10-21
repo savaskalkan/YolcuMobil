@@ -126,6 +126,21 @@ export default class LoginScreen extends Component {
                 Giriş Yap
               </Text>
             </TouchableOpacity>
+            {
+              __DEV__ &&
+              <TouchableOpacity
+                info
+                style={styles.signInbtn}
+                onPress={()=>this.setState({
+                  gsmNumber:"5079611458",
+                  userPassword:"1400"
+                })}
+              >
+                <Text autoCapitalize="words" style={styles.buttongetstarted}>
+                  Test
+            </Text>
+              </TouchableOpacity>
+            }
             <TouchableOpacity onPress={() => this.props.navigation.navigate(NavigateKeys.OtpSmsKey)}>
               <Text autoCapitalize="words" style={styles.buttongettext}>
                 Şifremi Unuttum
