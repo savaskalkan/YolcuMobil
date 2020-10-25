@@ -27,7 +27,7 @@ const sendData = {
   "CoordinateX": "25.56963",
   "CoordinateY": "32.56326",
   "Address": "",
-  "ProcessDate": "2020-10-18T21:53"
+  "ProcessDate": new Date()
 }
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -42,9 +42,10 @@ export default function App() {
 
   const setQrService = (data) => {
     console.log("location",location)
+    console.log("data",data)
     this.qrService.setQrInfo(data).then(responseJson => {
       console.log("responseJson", responseJson)
-      if (!responseJson.IsSuccess) {
+      if (responseJson.IsSuccess) {
         Alert.alert("Yolcu Mobil","Bilgiler başarıyla kaydedildi..!")
         return;
       }else{
@@ -85,7 +86,7 @@ export default function App() {
       userinfo = JSON.parse(userinfo)
 
       const datas = data.split("|")
-      const wehicleid = datas[0]
+      const vehicleid = datas[0]
       const aracid = datas[1]
       const plaka = datas[2]
       const koltukno = datas[3]
@@ -94,12 +95,12 @@ export default function App() {
         "PersonId": userinfo.PassengerId,
         "Plaka": plaka,
         "KoltukNo": koltukno,
-        "WehicleId": wehicleid,
+        "WehicleId": vehicleid,
         "AracId": aracid,
         "CoordinateX": location.coords.latitude,
         "CoordinateY": location.coords.longitude,
         "Address": "",
-        "ProcessDate": "2020-10-18T21:53"
+        "ProcessDate": new Date()
       }
 
       setQrService(sendingDatas)
