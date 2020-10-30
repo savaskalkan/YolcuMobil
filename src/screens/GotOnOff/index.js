@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, Button as RNButton, Image, ImageBackground, Alert, } from 'react-native';
+import { Text, View, ScrollView, Button as RNButton, Image, ImageBackground, Alert, AsyncStorage } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Card, CardItem, Body, Button } from 'native-base';
 import { QrService } from '../../services';
 import * as Location from 'expo-location';
+import Base64 from 'Base64';
 
 var StorageKeys = require('../../data/StorageKeys.json');
 
@@ -32,7 +33,8 @@ const sendData = {
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [infoData, setInfoData] = useState({ ...data })
+  const [infoData, setInfoData] = useState({})
+  const [sendingDatas, setSendingDatas] = useState({})
   const [isCancel, setIsCancel] = useState(true)
 
   const [location, setLocation] = useState(null);
@@ -40,10 +42,10 @@ export default function App() {
 
   qrService = new QrService();
 
-  const setQrService = (data) => {
+  const setQrService = () => {
     console.log("location", location)
-    console.log("data", data)
-    this.qrService.setQrInfo(data).then(responseJson => {
+    console.log("data", sendingDatas)
+    this.qrService.setQrInfo(sendingDatas).then(responseJson => {
       console.log("responseJson", responseJson)
       if (responseJson.IsSuccess) {
         Alert.alert("Yolcu Mobil", "Bilgiler başarıyla kaydedildi..!")
@@ -68,30 +70,57 @@ export default function App() {
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
+      console.log("locationerr", location)
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
       }
 
       let location = await Location.getCurrentPositionAsync({});
+      console.log("location", location)
       setLocation(location);
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ type, qrdata }) => {
+  const handleBarCodeScanned = ({ type, data }) => {
     setIsCancel(false)
     setScanned(true);
     // Decode the String
-    var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
-    const data = Base64.decode(qrdata); 
-    alert(`Bar code with type ${type} and data ${qrdata} has been scanned!-> ${data}`);
+    const ndata = Base64.atob(data);
+    //alert(`Bar code with type ${type} and data ${ndata} has been scanned!`);
     AsyncStorage.getItem(StorageKeys.PassengerDetailKey).then(userinfo => {
       userinfo = JSON.parse(userinfo)
 
-      const datas = data.split("|")
+      const datas = ndata.split("|")
       const vehicleid = datas[0]
       const aracid = datas[1]
       const plaka = datas[2]
       const koltukno = datas[3]
+
+      let today = new Date();
+      const hour = today.getUTCHours() < 10 ? "0" + today.getUTCHours() : today.getUTCHours()
+      const min = today.getUTCMinutes() < 10 ? "0" + today.getUTCMinutes() : today.getUTCMinutes()
+      const sec = today.getUTCSeconds() < 10 ? "0" + today.getUTCSeconds() : today.getUTCSeconds()
+      const month = parseInt(today.getUTCMonth() + 1) < 10 ? "0" + parseInt(today.getUTCMonth() + 1) : parseInt(today.getUTCMonth() + 1)
+      let date =
+        month + "/"
+        + today.getDate() + "/"
+        + today.getFullYear() + " "
+        + hour + ":"
+        + min + ":"
+        + sec
+
+      console.log("date", date)
+      const ninfoData = {
+        arac: plaka,
+        //lokasyon: "-",
+        koordinat: {
+          lat: location?.coords?.latitude || "|",
+          lng: location?.coords?.longitude || "|"
+        },
+        zaman: date
+      }
+      setInfoData(ninfoData)
+
       const sendingDatas = {
         "QRString": data,
         "PersonId": userinfo.PassengerId,
@@ -104,8 +133,7 @@ export default function App() {
         "Address": "",
         "ProcessDate": new Date()
       }
-
-      setQrService(sendingDatas)
+      setSendingDatas(sendingDatas)
     });
   };
 
@@ -154,13 +182,13 @@ export default function App() {
             !isCancel ?
               <ScrollView>
                 <View>
-                  {_renderCard("Araç", infoData.arac)}
-                  {_renderCard("Lokasyon", infoData.lokasyon)}
-                  {_renderCard("Koordinat", infoData.koordinat.lat + " - " + infoData.koordinat.lng)}
-                  {_renderCard("Zaman", infoData.zaman)}
+                  {_renderCard("Araç", infoData?.arac)}
+                  {/* {_renderCard("Lokasyon", infoData?.lokasyon)} */}
+                  {_renderCard("Koordinat", infoData?.koordinat?.lat + " - " + infoData?.koordinat?.lng)}
+                  {_renderCard("Zaman", infoData?.zaman)}
                 </View>
                 <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                  <Button style={{ alignSelf: 'center', width: '60%', margin: 10, }} success><Text style={{ color: '#fff', textAlign: 'center', width: '100%' }}> Bindim </Text></Button>
+                  <Button onPress={() => setQrService()} style={{ alignSelf: 'center', width: '60%', margin: 10, }} success><Text style={{ color: '#fff', textAlign: 'center', width: '100%' }}> Bindim </Text></Button>
                   {/* <Button onPress={() => setIsCancel(true)} style={{ alignSelf: 'center', width: '60%', margin: 10 }} danger><Text style={{ color: '#fff', textAlign: 'center', width: '100%' }}> Vazgeç </Text></Button> */}
                 </View>
               </ScrollView>
