@@ -42,8 +42,7 @@ export default function App() {
 
   qrService = new QrService();
 
-  const setQrService = () => {
-    console.log("location", location)
+  const setQrService = () => { 
     console.log("data", sendingDatas)
     this.qrService.setQrInfo(sendingDatas).then(responseJson => {
       console.log("responseJson", responseJson)
@@ -70,7 +69,6 @@ export default function App() {
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
-      console.log("locationerr", location)
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
       }
@@ -87,7 +85,7 @@ export default function App() {
     // Decode the String
     const ndata = Base64.atob(data);
     //alert(`Bar code with type ${type} and data ${ndata} has been scanned!`);
-    AsyncStorage.getItem(StorageKeys.PassengerDetailKey).then(userinfo => {
+    AsyncStorage.getItem(StorageKeys.PassengerDetailKey).then(async userinfo => {
       userinfo = JSON.parse(userinfo)
 
       const datas = ndata.split("|")
@@ -99,17 +97,14 @@ export default function App() {
       let today = new Date();
       const hour = today.getUTCHours() < 10 ? "0" + today.getUTCHours() : today.getUTCHours()
       const min = today.getUTCMinutes() < 10 ? "0" + today.getUTCMinutes() : today.getUTCMinutes()
-      const sec = today.getUTCSeconds() < 10 ? "0" + today.getUTCSeconds() : today.getUTCSeconds()
       const month = parseInt(today.getUTCMonth() + 1) < 10 ? "0" + parseInt(today.getUTCMonth() + 1) : parseInt(today.getUTCMonth() + 1)
       let date =
         month + "/"
         + today.getDate() + "/"
         + today.getFullYear() + " "
         + hour + ":"
-        + min + ":"
-        + sec
+        + min
 
-      console.log("date", date)
       const ninfoData = {
         arac: plaka,
         //lokasyon: "-",
@@ -122,18 +117,18 @@ export default function App() {
       setInfoData(ninfoData)
 
       const sendingDatas = {
-        "QRString": data,
-        "PersonId": userinfo.PassengerId,
-        "Plaka": plaka,
-        "KoltukNo": koltukno,
-        "WehicleId": vehicleid,
-        "AracId": aracid,
-        "CoordinateX": location.coords.latitude,
-        "CoordinateY": location.coords.longitude,
-        "Address": "",
-        "ProcessDate": new Date()
+        QRString: ndata,
+        PersonId: userinfo.PassengerId,
+        Plaka: plaka,
+        KoltukNo: koltukno,
+        WehicleId: vehicleid,
+        AracId: aracid,
+        CoordinateX: location?.coords?.latitude,
+        CoordinateY: location?.coords?.longitude,
+        Address: "",
+        ProcessDate: new Date()
       }
-      setSendingDatas(sendingDatas)
+      await setSendingDatas(sendingDatas)
     });
   };
 
