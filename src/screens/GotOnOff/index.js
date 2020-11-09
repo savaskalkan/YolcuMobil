@@ -202,7 +202,6 @@ export default function App() {
               </View>
           }
         </View>
-        <RNButton buttonstyle={{ backgroundColor: 'red' }} title={'tıkla'} onPress={() => setQrService(sendData)} />
         {scanned && <RNButton buttonstyle={{ backgroundColor: 'red' }} title={'Vazgeç ve Tekrar Okut'} onPress={() => {
           setIsCancel(true)
           setScanned(false)
