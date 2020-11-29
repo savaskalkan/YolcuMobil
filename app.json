@@ -23,12 +23,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to let user qr code scaning.",
+        "NSLocationWhenInUseUsageDescription": "This app uses the location to let user set location information becaouse of start as driver"
+      }
     },
     "android": {
       "package": "com.ceturpassenger.cetur",
       "versionCode": 1,
-      "permissions": [],
+      "permissions": ["CAMERA", "ACCESS_FINE_LOCATION" ],
       "icon": "./assets/icon.png"
     },
     "description": ""

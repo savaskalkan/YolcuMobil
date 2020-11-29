@@ -131,9 +131,9 @@ export default class LoginScreen extends Component {
               <TouchableOpacity
                 info
                 style={styles.signInbtn}
-                onPress={()=>this.setState({
-                  gsmNumber:"5079611458",
-                  userPassword:"1400"
+                onPress={() => this.setState({
+                  gsmNumber: "5079611458",
+                  userPassword: "1400"
                 })}
               >
                 <Text autoCapitalize="words" style={styles.buttongetstarted}>
@@ -191,7 +191,11 @@ export default class LoginScreen extends Component {
         AsyncStorage.setItem(StorageKeys.PassengerDetailKey, JSON.stringify(responseJson.Data.PassengerDetail));
         AsyncStorage.setItem(StorageKeys.IsLoginKey, "true");
         AsyncStorage.setItem(StorageKeys.lastUserName, this.state.gsmNumber); // zvs: son kullanıcıyı asyncde tutalım
-        this.props.navigation.navigate(NavigateKeys.MenuKey);
+        if (responseJson.lastLoginDate) {
+          this.props.navigation.navigate(NavigateKeys.MenuKey);
+        } else {
+          this.props.navigation.navigate(NavigateKeys.ChangePasswordKey);
+        }
       }
       else {
         Alert.alert(Constant.ErrorText, responseJson.ExceptionMsg);
