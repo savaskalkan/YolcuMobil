@@ -85,7 +85,7 @@ export default class MainScreen extends Component {
     const compoArray = []
     flatlistDataSource.map(item => {
       const component = (
-        <TouchableOpacity onPress={() => this.onFlatListPress(item.key)}>
+        <TouchableOpacity key={item.key} onPress={() => this.onFlatListPress(item.key)}>
           <Card style={{ height: 90, padding: 5 }}>
             <View style={{ flex: 1, flexDirection: item.key % 2 ? 'row' : 'row-reverse', justifyContent: 'space-between' }}>
               <Image style={{ height: 75, width: 75, marginLeft: 10 }} source={item.uri} />

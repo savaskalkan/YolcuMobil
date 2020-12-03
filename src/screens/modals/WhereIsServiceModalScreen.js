@@ -82,7 +82,7 @@ export default class WhereIsServiceModalScreen extends Component {
   render() {
     return (
       <Container>
-        <Content style={{ paddingLeft: 5, paddingRight: 5,paddingTop:30 }}> 
+        <Content style={{ paddingLeft: 15, paddingRight: 15,paddingTop:30 }}> 
           <Dropdown label='Projeler' data={this.state.projects} value={this.state.selectedProjectText} onChangeText={this.onProjectChangeEvent}/>
           <Dropdown label='Güzergahlar' data={this.state.routes} value={this.state.selectRouteText} onChangeText={this.onRouteChangeEvent}/>
           <Dropdown label='Seferler' data={this.state.voyages} onChangeText={this.onVoyageChangeEvent}/>

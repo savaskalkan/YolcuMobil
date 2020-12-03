@@ -133,7 +133,7 @@ export default class LoginScreen extends Component {
                 style={styles.signInbtn}
                 onPress={() => this.setState({
                   gsmNumber: "5079611458",
-                  userPassword: "1400"
+                  userPassword: "1401"
                 })}
               >
                 <Text autoCapitalize="words" style={styles.buttongetstarted}>
