@@ -27,7 +27,9 @@
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to let user qr code scaning.",
         "NSLocationWhenInUseUsageDescription": "This app uses the location to let user set location information becaouse of start as driver"
-      }
+      },
+      "bundleIdentifier": "com.ceturpassenger.cetur",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.ceturpassenger.cetur",
