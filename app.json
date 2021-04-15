@@ -26,7 +26,7 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to let user qr code scaning.",
-        "NSLocationWhenInUseUsageDescription": "This app uses the location to let user set location information becaouse of start as driver"
+        "NSLocationWhenInUseUsageDescription": "In order to manage the covid19 filation process, the location data are collected by using the 'I got off the vehicle-got on the vehicle' function in order to track who got on the vehicle from which locations."
       },
       "bundleIdentifier": "com.ceturpassenger.cetur",
       "buildNumber": "1.0.0"
